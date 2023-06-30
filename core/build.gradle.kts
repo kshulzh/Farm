@@ -45,6 +45,8 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
+                implementation("org.springframework:spring-test:6.0.9")
+                implementation("org.springframework.boot:spring-boot-test:3.0.1")
             }
         }
         val jsMain by getting {
@@ -70,6 +72,9 @@ tasks.named<Copy>("jvmProcessResources") {
 tasks.named<JavaExec>("run") {
     dependsOn(tasks.named<Jar>("jvmJar"))
     classpath(tasks.named<Jar>("jvmJar"))
+}
+dependencies {
+    implementation(project(mapOf("path" to ":common")))
 }
 
 jacoco {

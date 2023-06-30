@@ -1,7 +1,8 @@
 package me.kshulzh.farm.api
 
 import me.kshulzh.farm.dto.AnimalDto
-import me.kshulzh.farm.dto.MoveAnimalDto
+import me.kshulzh.farm.dto.AnimalInSectionDto
+import me.kshulzh.farm.dto.AnimalSpeciesDto
 
 interface AnimalService {
 
@@ -11,7 +12,7 @@ interface AnimalService {
      * @param animal
      * @return void
      */
-    fun add(animal: AnimalDto)
+    fun addAnimal(animal: AnimalDto)
 
     /**
      * remove animal from db
@@ -19,16 +20,16 @@ interface AnimalService {
      * @param id
      * @return void
      */
-    fun remove(id: String)
+    fun deleteAnimal(id: String)
 
     /**
      * Move animal from section to section if from is null it is add to section if to is null remove from sections
      *
-     * @param moveAnimalDto
+     * @param animalInSectionDto
 
      * @return void
      */
-    fun move(moveAnimalDto: MoveAnimalDto)
+    fun move(animalInSectionDto: AnimalInSectionDto)
 
     /**
      * returns animal by id
@@ -37,5 +38,11 @@ interface AnimalService {
      * @return AnimalDto
      */
 
-    fun getById(id: String) : AnimalDto
+    fun getAnimalById(id: String) : AnimalDto
+
+    fun addAnimalSpecie(animalSpecieDto:AnimalSpeciesDto) : AnimalSpeciesDto
+
+    fun getAllAnimals() : List<AnimalDto>
+
+    fun getAllAnimalSpecies() : List<AnimalSpeciesDto>
 }

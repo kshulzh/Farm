@@ -1,8 +1,6 @@
 package me.kshulzh.farm.entity
 
-import me.kshulzh.farm.dto.EntityDto
-
-class AnimalSpecies : EntityDto() {
+class AnimalSpecies : Entity() {
     lateinit var animalType: AnimalType
     lateinit var description: String
 }
