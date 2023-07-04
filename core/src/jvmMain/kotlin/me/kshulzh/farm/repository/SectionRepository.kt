@@ -4,5 +4,4 @@ import me.kshulzh.farm.entity.Section
 import org.springframework.stereotype.Repository
 
 @Repository
-interface SectionRepository : EntityRepository<Section> {
-}
+interface SectionRepository : EntityRepository<Section>

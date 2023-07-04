@@ -1,3 +1,3 @@
 package me.kshulzh.farm.exception
 
-class AnimalSpecieNotFoundException(val id_:String) : NotFoundException("AnimalSpecie",id_)
+class AnimalSpecieNotFoundException(val id_: String) : NotFoundException("AnimalSpecie", id_)

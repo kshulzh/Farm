@@ -38,11 +38,11 @@ interface AnimalService {
      * @return AnimalDto
      */
 
-    fun getAnimalById(id: String) : AnimalDto
+    fun getAnimalById(id: String): AnimalDto
 
-    fun addAnimalSpecie(animalSpecieDto:AnimalSpeciesDto) : AnimalSpeciesDto
+    fun addAnimalSpecie(animalSpecieDto: AnimalSpeciesDto): AnimalSpeciesDto
 
-    fun getAllAnimals() : List<AnimalDto>
+    fun getAllAnimals(): List<AnimalDto>
 
-    fun getAllAnimalSpecies() : List<AnimalSpeciesDto>
+    fun getAllAnimalSpecies(): List<AnimalSpeciesDto>
 }

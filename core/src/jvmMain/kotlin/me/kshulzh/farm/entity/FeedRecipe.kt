@@ -1,6 +1,8 @@
 package me.kshulzh.farm.entity
 
 open class FeedRecipe : Entity() {
-    var description: String? = null;
-    var ingredients: Map<IngredientType,Double> = mutableMapOf()
+    lateinit var ingredientId: String
+    var name: String? = null
+    var description: String? = null
+    var ingredients: Map<IngredientType, Double>? = null
 }

@@ -22,31 +22,33 @@ class FeedController : FeedServiceHTTP {
         TODO()
     }
 
-    override fun addIngredient(ingredient: FeedIngredientDto) {
+    override fun addIngredient(ingredient: IngredientTypeDto) {
         TODO()
     }
 
-    override fun editIngredient(ingredient: FeedIngredientDto) {
+    override fun editIngredient(ingredient: IngredientTypeDto) {
         TODO()
     }
 
     override fun deleteIngredient(ingredientId: String) {
         TODO()
     }
-    override fun getIngredient(ingredientId: String) : FeedIngredientDto {
+    override fun getIngredient(ingredientId: String) : IngredientTypeDto {
         TODO()
     }
-    override fun getIngredients(criteria: Map<String,String>?) : List<FeedIngredientDto> {
+    override fun getIngredients(criteria: Map<String,String>?) : List<IngredientTypeDto> {
         TODO()
     }
 
     override fun fillStorage(ingredient: FillStorageDto) {
         TODO()
     }
-    override fun getLeftover(ingredientId: String) : FeedIngredientDto {
-        TODO()
+
+    override fun getLeftovers(ingredientId: String): List<FillStorageDto> {
+        TODO("Not yet implemented")
     }
-    override fun getLeftovers(criteria: Map<String,String>?) : List<FeedIngredientDto> {
+
+    override fun getLeftovers(criteria: Map<String,String>?) : List<IngredientTypeDto> {
         TODO()
     }
 

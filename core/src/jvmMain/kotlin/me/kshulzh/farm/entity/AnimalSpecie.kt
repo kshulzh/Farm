@@ -1,6 +1,6 @@
 package me.kshulzh.farm.entity
 
-class AnimalSpecies : Entity() {
+class AnimalSpecie : Entity() {
     lateinit var animalType: AnimalType
     lateinit var description: String
 }

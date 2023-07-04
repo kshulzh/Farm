@@ -4,16 +4,12 @@ import me.kshulzh.farm.api.AnimalService
 import me.kshulzh.farm.dto.AnimalDto
 import me.kshulzh.farm.dto.AnimalInSectionDto
 import me.kshulzh.farm.dto.AnimalSpeciesDto
-import me.kshulzh.farm.entity.AnimalsInSection
-import me.kshulzh.farm.entity.Section
 import me.kshulzh.farm.exception.AnimalNotFoundException
 import me.kshulzh.farm.exception.AnimalSpecieNotFoundException
-import me.kshulzh.farm.exception.NotFoundException
 import me.kshulzh.farm.exception.SectionNotFoundException
-import me.kshulzh.farm.id
 import me.kshulzh.farm.mappers.AnimalInSectionMapper
 import me.kshulzh.farm.mappers.AnimalMapper
-import me.kshulzh.farm.mappers.AnimalSpeciesMapper
+import me.kshulzh.farm.mappers.AnimalSpecieMapper
 import me.kshulzh.farm.mappers.mapStringToDate
 import me.kshulzh.farm.repository.AnimalRepository
 import me.kshulzh.farm.repository.AnimalSpeciesRepository
@@ -27,23 +23,29 @@ import java.time.LocalDateTime
 class AnimalServiceImpl : AnimalService {
     @Autowired
     lateinit var animalRepository: AnimalRepository
+
     @Autowired
     lateinit var animalsInSectionRepository: AnimalsInSectionRepository
+
     @Autowired
     lateinit var animalSpeciesRepository: AnimalSpeciesRepository
+
     @Autowired
     lateinit var sectionRepository: SectionRepository
 
     @Autowired
     lateinit var animalMapper: AnimalMapper
+
     @Autowired
-    lateinit var animalSpeciesMapper: AnimalSpeciesMapper
+    lateinit var animalSpecieMapper: AnimalSpecieMapper
+
     @Autowired
     lateinit var animalInSectionMapper: AnimalInSectionMapper
 
     override fun addAnimal(animal: AnimalDto) {
-        if(animal.specieId != null) {
-            animalSpeciesRepository.findById(animal.specieId!!) ?: throw AnimalSpecieNotFoundException(animal.specieId!!)
+        if (animal.specieId != null) {
+            animalSpeciesRepository.findById(animal.specieId!!)
+                ?: throw AnimalSpecieNotFoundException(animal.specieId!!)
         }
         animalRepository.save(animalMapper.toEntity(animal))
     }
@@ -54,14 +56,15 @@ class AnimalServiceImpl : AnimalService {
 
     override fun move(animalInSectionDto: AnimalInSectionDto) {
         var animalInSection = animalsInSectionRepository.getSectionIdByAnimalId(animalInSectionDto.animalId)
-        if(animalInSection != null) {
-            if(animalInSection.section?.id == animalInSectionDto.to)
-            animalInSection.endDate = mapStringToDate(animalInSectionDto.startDate) ?: LocalDateTime.now()
+        if (animalInSection != null) {
+            if (animalInSection.section?.id == animalInSectionDto.to)
+                animalInSection.endDate = mapStringToDate(animalInSectionDto.startDate) ?: LocalDateTime.now()
             animalsInSectionRepository.save(animalInSection)
         }
 
-        if(animalInSectionDto.to != null) {
-            sectionRepository.findById(animalInSectionDto.to!!) ?: throw SectionNotFoundException(animalInSectionDto.to!!)
+        if (animalInSectionDto.to != null) {
+            sectionRepository.findById(animalInSectionDto.to!!)
+                ?: throw SectionNotFoundException(animalInSectionDto.to!!)
             animalsInSectionRepository.save(
                 animalInSectionMapper.toEntity(animalInSectionDto)
             )
@@ -73,7 +76,7 @@ class AnimalServiceImpl : AnimalService {
     }
 
     override fun addAnimalSpecie(animalSpecieDto: AnimalSpeciesDto): AnimalSpeciesDto {
-        return animalSpeciesMapper.toDto(animalSpeciesRepository.save(animalSpeciesMapper.toEntity(animalSpecieDto)))
+        return animalSpecieMapper.toDto(animalSpeciesRepository.save(animalSpecieMapper.toEntity(animalSpecieDto)))
     }
 
     override fun getAllAnimals(): List<AnimalDto> {
@@ -81,6 +84,6 @@ class AnimalServiceImpl : AnimalService {
     }
 
     override fun getAllAnimalSpecies(): List<AnimalSpeciesDto> {
-        return animalSpeciesRepository.getAll().map { animalSpeciesMapper.toDto(it) }
+        return animalSpeciesRepository.getAll().map { animalSpecieMapper.toDto(it) }
     }
 }

@@ -1,8 +1,7 @@
 package me.kshulzh.farm.repository
 
-import me.kshulzh.farm.entity.AnimalSpecies
+import me.kshulzh.farm.entity.AnimalSpecie
 import org.springframework.stereotype.Repository
 
 @Repository
-interface AnimalSpeciesRepository : EntityRepository<AnimalSpecies> {
-}
+interface AnimalSpeciesRepository : EntityRepository<AnimalSpecie>

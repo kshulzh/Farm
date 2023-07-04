@@ -4,5 +4,4 @@ import me.kshulzh.farm.entity.IngredientType
 import org.springframework.stereotype.Repository
 
 @Repository
-interface IngredientTypeRepository : EntityRepository<IngredientType> {
-}
+interface IngredientTypeRepository : EntityRepository<IngredientType>

@@ -1,9 +1,7 @@
 package me.kshulzh.farm.mappers
 
 import me.kshulzh.farm.dto.AnimalDto
-import me.kshulzh.farm.dto.AnimalSpeciesDto
 import me.kshulzh.farm.entity.Animal
-import me.kshulzh.farm.entity.AnimalSpecies
 import me.kshulzh.farm.exception.AnimalSpecieNotFoundException
 import me.kshulzh.farm.id
 import me.kshulzh.farm.repository.AnimalSpeciesRepository
@@ -13,15 +11,17 @@ import org.springframework.stereotype.Component
 @Component
 class AnimalMapper : MapperEntityDto<Animal, AnimalDto> {
     @Autowired
-    lateinit var animalSpeciesMapper :AnimalSpeciesMapper
+    lateinit var animalSpecieMapper: AnimalSpecieMapper
+
     @Autowired
     lateinit var animalSpeciesRepository: AnimalSpeciesRepository
     override fun toEntity(dto: AnimalDto): Animal {
         return Animal().apply {
-            id = dto.id
+            id = dto.id ?: id()
             type = dto.type
             gender = dto.gender
-            specie = dto.specieId?.let { animalSpeciesRepository.findById(it) ?: throw AnimalSpecieNotFoundException(id) }
+            specie =
+                dto.specieId?.let { animalSpeciesRepository.findById(it) ?: throw AnimalSpecieNotFoundException(id) }
             weight = dto.weight
         }
     }

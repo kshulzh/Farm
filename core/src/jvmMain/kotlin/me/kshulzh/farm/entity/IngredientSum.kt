@@ -1,6 +1,6 @@
 package me.kshulzh.farm.entity
 
-class Ingredient : Entity() {
-    lateinit var count: String
+class IngredientSum : Entity() {
+    lateinit var leftovers: String
     lateinit var ingredientType: IngredientType
 }

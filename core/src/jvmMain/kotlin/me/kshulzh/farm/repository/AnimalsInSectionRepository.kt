@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface AnimalsInSectionRepository : EntityRepository<AnimalsInSection> {
-    fun getSectionIdByAnimalId(id: String) : AnimalsInSection?
+    fun getSectionIdByAnimalId(id: String): AnimalsInSection?
 }

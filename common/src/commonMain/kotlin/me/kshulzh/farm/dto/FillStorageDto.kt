@@ -1,7 +1,7 @@
 package me.kshulzh.farm.dto
 
 
-class FillStorageDto {
+class FillStorageDto : EntityDto() {
     lateinit var ingredientId: String
-    lateinit var count: String
+    lateinit var weght: String
 }

@@ -1,4 +1,3 @@
 package me.kshulzh.farm.exception
 
-open class FarmException : RuntimeException() {
-}
+open class FarmException : RuntimeException()
