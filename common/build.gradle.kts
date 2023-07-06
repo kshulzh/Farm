@@ -1,14 +1,12 @@
 plugins {
-    kotlin("multiplatform") version "1.8.21"
+    kotlin("multiplatform") version "1.8.20"
     application
     jacoco
+    `maven-publish`
 }
 
-repositories {
-    jcenter()
-    mavenCentral()
-    maven("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
-}
+group = extra["farm.group"]!!
+version = extra["farm.version"]!!
 
 kotlin {
     jvm {
@@ -37,8 +35,6 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation("org.springframework:spring-context:6.0.9")
-                implementation("org.springframework:spring-web:6.0.9")
 
             }
         }

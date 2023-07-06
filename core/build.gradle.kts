@@ -1,14 +1,12 @@
 plugins {
-    kotlin("multiplatform") version "1.8.21"
+    kotlin("multiplatform") version "1.8.20"
     application
     jacoco
+    `maven-publish`
 }
 
-repositories {
-    jcenter()
-    mavenCentral()
-    maven("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
-}
+group = extra["farm.group"]!!
+version = extra["farm.version"]!!
 
 kotlin {
     jvm {
