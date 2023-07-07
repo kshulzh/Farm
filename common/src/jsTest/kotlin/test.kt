@@ -1,3 +1,13 @@
+import kotlinext.js.asJsObject
+import kotlinext.js.getOwnPropertyNames
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runTest
+import me.kshulzh.farm.api.AnimalService
+import me.kshulzh.farm.dto.AnimalDto
+import me.kshulzh.farm.http.HttpClientImpl
+import kotlin.test.Test
+
 /*
  *   Copyright (c) 2023. Kyrylo Shulzhenko
  *
@@ -14,18 +24,10 @@
  *   limitations under the License.
  */
 
-@file:JsExport
-package me.kshulzh.farm.dto
+class test {
+    @Test
+    fun a() {
+        println(AnimalService::class.js.asDynamic())
 
-import me.kshulzh.farm.entity.AnimalState
-import me.kshulzh.farm.entity.AnimalType
-import me.kshulzh.farm.entity.Gender
-import kotlin.js.JsExport
-
-class AnimalDto : EntityDto() {
-    var gender: Gender = Gender.NONE
-    var weight: Double? = null
-    var specieId: String? = null
-    var type: AnimalType? = null
-    var state: AnimalState? = null
+    }
 }

@@ -14,40 +14,36 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm.controller
+package me.kshulzh.farm.client
 
-import me.kshulzh.farm.api.AnimalServiceHTTP
+import me.kshulzh.farm.api.AnimalService
 import me.kshulzh.farm.dto.AnimalDto
 import me.kshulzh.farm.dto.AnimalInSectionDto
 import me.kshulzh.farm.dto.AnimalSpeciesDto
-import org.springframework.web.bind.annotation.*
-import java.time.LocalDateTime
 
-@RestController
-class AnimalController : AnimalServiceHTTP {
+class AnimalServiceImpl : AnimalService {
+    override fun addAnimal(animal: AnimalDto) {
 
-    override fun addAnimal(@RequestBody animal: AnimalDto) {
-        println(animal)
+        TODO("Not yet implemented")
     }
 
-    override fun deleteAnimal(@PathVariable("id") id: String) {
-        TODO()
+    override fun deleteAnimal(id: String) {
+        TODO("Not yet implemented")
     }
 
-    override fun move(@RequestBody animalInSectionDto: AnimalInSectionDto) {
-        TODO()
+    override fun move(animalInSectionDto: AnimalInSectionDto) {
+        TODO("Not yet implemented")
     }
 
-    override fun getAnimalById(id: String) : AnimalDto {
-        println(LocalDateTime.now())
-        return AnimalDto()
-    }
-
-    override fun getAllAnimals(): List<AnimalDto> {
+    override fun getAnimalById(id: String): AnimalDto {
         TODO("Not yet implemented")
     }
 
     override fun addAnimalSpecie(animalSpecieDto: AnimalSpeciesDto): AnimalSpeciesDto {
+        TODO("Not yet implemented")
+    }
+
+    override fun getAllAnimals(): List<AnimalDto> {
         TODO("Not yet implemented")
     }
 

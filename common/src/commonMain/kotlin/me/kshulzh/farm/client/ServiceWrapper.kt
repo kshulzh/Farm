@@ -14,18 +14,10 @@
  *   limitations under the License.
  */
 
-@file:JsExport
-package me.kshulzh.farm.dto
+package me.kshulzh.farm.client
 
-import me.kshulzh.farm.entity.AnimalState
-import me.kshulzh.farm.entity.AnimalType
-import me.kshulzh.farm.entity.Gender
-import kotlin.js.JsExport
+import kotlin.reflect.KClass
 
-class AnimalDto : EntityDto() {
-    var gender: Gender = Gender.NONE
-    var weight: Double? = null
-    var specieId: String? = null
-    var type: AnimalType? = null
-    var state: AnimalState? = null
+interface ServiceWrapper {
+    fun <T> wrap(klass:KClass<*>)
 }

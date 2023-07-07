@@ -14,18 +14,23 @@
  *   limitations under the License.
  */
 
-@file:JsExport
-package me.kshulzh.farm.dto
+package me.kshulzh.farm.client
 
-import me.kshulzh.farm.entity.AnimalState
-import me.kshulzh.farm.entity.AnimalType
-import me.kshulzh.farm.entity.Gender
-import kotlin.js.JsExport
+import kotlinext.js.asJsObject
+import kotlinext.js.getOwnPropertyNames
+import kotlin.js.json
+import kotlin.reflect.ExperimentalAssociatedObjects
+import kotlin.reflect.KClass
+import kotlin.reflect.KType
 
-class AnimalDto : EntityDto() {
-    var gender: Gender = Gender.NONE
-    var weight: Double? = null
-    var specieId: String? = null
-    var type: AnimalType? = null
-    var state: AnimalState? = null
+import kotlin.reflect.findAssociatedObject
+
+
+actual class HttpClientServiceWrapper : ServiceWrapper {
+    @OptIn(ExperimentalAssociatedObjects::class)
+    override fun <T> wrap(klass: KClass<*>) {
+        println(klass.getOwnPropertyNames())
+
+        TODO("Not yet implemented")
+    }
 }

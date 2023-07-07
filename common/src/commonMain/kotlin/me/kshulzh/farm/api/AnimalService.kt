@@ -13,12 +13,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+@file:JsExport
+@file:Suppress("OPT_IN_USAGE")
 
 package me.kshulzh.farm.api
 
 import me.kshulzh.farm.dto.AnimalDto
 import me.kshulzh.farm.dto.AnimalInSectionDto
 import me.kshulzh.farm.dto.AnimalSpeciesDto
+import kotlin.js.JsExport
+import kotlin.js.JsName
 
 interface AnimalService {
 
