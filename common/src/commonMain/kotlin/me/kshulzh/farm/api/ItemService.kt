@@ -14,23 +14,18 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm.client
+package me.kshulzh.farm.api
 
-import kotlinext.js.asJsObject
-import kotlinext.js.getOwnPropertyNames
-import kotlin.js.json
-import kotlin.reflect.ExperimentalAssociatedObjects
-import kotlin.reflect.KClass
-import kotlin.reflect.KType
+import me.kshulzh.farm.dto.ItemDto
 
-import kotlin.reflect.findAssociatedObject
+interface ItemService {
+    fun addItem(item: ItemDto): ItemDto
 
+    fun editItem(item: ItemDto): ItemDto
 
-actual class HttpClientServiceWrapper : ServiceWrapper {
-    @OptIn(ExperimentalAssociatedObjects::class)
-    override fun <T> wrap(klass: KClass<*>) {
-        println(klass.getOwnPropertyNames())
+    fun getItemById(id: String): ItemDto
 
-        TODO("Not yet implemented")
-    }
+    fun getItems(): List<ItemDto>
+
+    fun deleteItem(id: String)
 }

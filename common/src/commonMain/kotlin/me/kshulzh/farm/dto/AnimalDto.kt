@@ -13,17 +13,15 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-
-@file:JsExport
 package me.kshulzh.farm.dto
 
 import me.kshulzh.farm.entity.AnimalState
 import me.kshulzh.farm.entity.AnimalType
 import me.kshulzh.farm.entity.Gender
-import kotlin.js.JsExport
+
 
 class AnimalDto : EntityDto() {
-    var gender: Gender = Gender.NONE
+    var gender: String = Gender.NONE.name
     var weight: Double? = null
     var specieId: String? = null
     var type: AnimalType? = null

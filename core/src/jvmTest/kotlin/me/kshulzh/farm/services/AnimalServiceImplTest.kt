@@ -13,10 +13,6 @@ import me.kshulzh.farm.entity.Gender
 import me.kshulzh.farm.entity.Section
 import me.kshulzh.farm.exception.NotFoundException
 import me.kshulzh.farm.id
-import me.kshulzh.farm.repository.AnimalRepository
-import me.kshulzh.farm.repository.AnimalSpeciesRepository
-import me.kshulzh.farm.repository.AnimalsInSectionRepository
-import me.kshulzh.farm.repository.SectionRepository
 import me.kshulzh.farm.utils.capture
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
@@ -27,7 +23,6 @@ import org.mockito.kotlin.never
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.context.support.AnnotationConfigContextLoader
@@ -51,7 +46,7 @@ class AnimalServiceImplTest : BasicTest() {
     val animalDtos = listOf(
         AnimalDto().apply {
             id = id()
-            gender = Gender.NONE
+            gender = Gender.NONE.name
             weight = null
             specieId = null
             type = null
@@ -59,7 +54,7 @@ class AnimalServiceImplTest : BasicTest() {
         },
         AnimalDto().apply {
             id = id()
-            gender = Gender.NONE
+            gender = Gender.NONE.name
             weight = null
             specieId = animalSpeciesDtos[0].id
             type = AnimalType.QUAIL
@@ -67,7 +62,7 @@ class AnimalServiceImplTest : BasicTest() {
         },
         AnimalDto().apply {
             id = id()
-            gender = Gender.NONE
+            gender = Gender.NONE.name
             weight = null
             specieId = id()
             type = AnimalType.QUAIL

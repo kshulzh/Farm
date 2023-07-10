@@ -2,9 +2,9 @@ package me.kshulzh.farm.services
 
 import me.kshulzh.farm.Configuration
 import me.kshulzh.farm.dto.FeedDto
-import me.kshulzh.farm.dto.IngredientTypeDto
 import me.kshulzh.farm.dto.FeedRecipeDto
 import me.kshulzh.farm.dto.FillStorageDto
+import me.kshulzh.farm.dto.IngredientTypeDto
 import me.kshulzh.farm.dto.ProduceFeedDto
 import me.kshulzh.farm.entity.FeedRecipe
 import me.kshulzh.farm.entity.Ingredient
@@ -16,9 +16,9 @@ import me.kshulzh.farm.exception.FeedProduceException
 import me.kshulzh.farm.exception.IngredientTypeNotFoundException
 import me.kshulzh.farm.exception.RecipeNotFoundException
 import me.kshulzh.farm.id
-import me.kshulzh.farm.mappers.IngredientypeMapper
 import me.kshulzh.farm.mappers.FeedRecipeMapper
 import me.kshulzh.farm.mappers.IngredientMapper
+import me.kshulzh.farm.mappers.IngredientypeMapper
 import me.kshulzh.farm.mappers.fromWeigth
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
@@ -192,7 +192,7 @@ class FeedServiceImplTest : BasicTest() {
             .thenReturn(ingredientypeMapper.toEntity(ingredientTypeDtos[0]))
         Mockito.`when`(ingredientTypeRepository.findById(ingredientTypeDtos[1].id!!))
             .thenReturn(ingredientypeMapper.toEntity(ingredientTypeDtos[1]))
-        feedServiceImpl.addReceipt(feedRecipeDtos[0])
+        feedServiceImpl.addRecipe(feedRecipeDtos[0])
 
         verify(feedRecipeRepository).save(capture(recipeArgumentCaptor))
 
@@ -208,7 +208,7 @@ class FeedServiceImplTest : BasicTest() {
             .thenReturn(ingredientypeMapper.toEntity(ingredientTypeDtos[0]))
         Mockito.`when`(ingredientTypeRepository.findById(ingredientTypeDtos[1].id!!))
             .thenReturn(ingredientypeMapper.toEntity(ingredientTypeDtos[1]))
-        feedServiceImpl.addReceipt(feedRecipeDtos[0])
+        feedServiceImpl.addRecipe(feedRecipeDtos[0])
 
         verify(feedRecipeRepository).save(capture(recipeArgumentCaptor))
 
@@ -221,19 +221,19 @@ class FeedServiceImplTest : BasicTest() {
     @Test
     fun shouldDeleteRecipe() {
         Mockito.`when`(feedRecipeRepository.deleteById(feedRecipeDtos[0].id!!)).thenReturn(FeedRecipe())
-        feedServiceImpl.deleteReceipt(feedRecipeDtos[0].id!!)
+        feedServiceImpl.deleteRecipe(feedRecipeDtos[0].id!!)
 
         verify(feedRecipeRepository).deleteById(feedRecipeDtos[0].id!!)
     }
 
     @Test
     fun shouldNotDeleteWhenRecipeDoesNotExist() {
-        assertThrows<RecipeNotFoundException> { feedServiceImpl.deleteReceipt(id()) }
+        assertThrows<RecipeNotFoundException> { feedServiceImpl.deleteRecipe(id()) }
     }
 
     @Test
     fun shouldNotFindWhenRecipeDoesNotExist() {
-        assertThrows<RecipeNotFoundException> { feedServiceImpl.getReceipt(id()) }
+        assertThrows<RecipeNotFoundException> { feedServiceImpl.getRecipe(id()) }
     }
 
     @Test

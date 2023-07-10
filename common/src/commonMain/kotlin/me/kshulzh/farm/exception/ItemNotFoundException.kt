@@ -14,7 +14,6 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm.client
+package me.kshulzh.farm.exception
 
-
-expect class HttpClientServiceWrapper : ServiceWrapper
+class ItemNotFoundException(val id_: String) : NotFoundException("Item", id_)

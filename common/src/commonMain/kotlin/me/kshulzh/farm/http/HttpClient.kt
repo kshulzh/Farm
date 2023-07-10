@@ -16,14 +16,61 @@
 
 package me.kshulzh.farm.http
 
-interface HttpClient {
-    suspend fun <T> request(method: Method, body: Any? = null, path: String, headers:Map<String,String> = mutableMapOf()): T
-    suspend fun <T> get(path: String, headers:Map<String,String> = mutableMapOf()) = request<T>(Method.GET, null, path, headers)
-    suspend fun <T> post(body: Any? = null, path: String, headers:Map<String,String> = mutableMapOf()) = request<T>(Method.POST, body, path, headers)
-    suspend fun <T> put(body: Any? = null, path: String, headers:Map<String,String> = mutableMapOf()) = request<T>(Method.PUT, body, path, headers)
-    suspend fun <T> delete(body: Any? = null, path: String, headers:Map<String,String> = mutableMapOf()) = request<T>(Method.DELETE, body, path, headers)
+import kotlin.reflect.KClass
 
-    suspend fun <T> getById(path: String, id: String, headers:Map<String,String> = mutableMapOf()) = get<T>("$path/$id",headers)
-    suspend fun <T> putById(body: Any? = null, path: String, id: String, headers:Map<String,String> = mutableMapOf()) = put<T>(body,"$path/$id",headers)
-    suspend fun <T> deleteById(body: Any? = null, path: String, id: String, headers:Map<String,String> = mutableMapOf()) = delete<T>(body,"$path/$id",headers)
+interface HttpClient {
+    suspend fun <T> request(
+        method: Method,
+        body: Any? = null,
+        path: String,
+        kClass: KClass<*> = Unit::class,
+        headers: Map<String, String> = mutableMapOf()
+    ): T
+
+    suspend fun <T> get(path: String, kClass: KClass<*> = Unit::class, headers: Map<String, String> = mutableMapOf()) =
+        request<T>(Method.GET, null, path, kClass, headers)
+
+    suspend fun <T> post(
+        body: Any? = null,
+        path: String,
+        kClass: KClass<*> = Unit::class,
+        headers: Map<String, String> = mutableMapOf()
+    ) = request<T>(Method.POST, body, path, kClass, headers)
+
+    suspend fun <T> put(
+        body: Any? = null,
+        path: String,
+        kClass: KClass<*> = Unit::class,
+        headers: Map<String, String> = mutableMapOf()
+    ) = request<T>(Method.PUT, body, path, kClass, headers)
+
+    suspend fun <T> delete(
+        body: Any? = null,
+        path: String,
+        kClass: KClass<*> = Unit::class,
+        headers: Map<String, String> = mutableMapOf()
+    ) = request<T>(Method.DELETE, body, path, kClass, headers)
+
+    suspend fun <T> getById(
+        path: String,
+        id: String,
+        kClass: KClass<*> = Unit::class,
+        headers: Map<String, String> = mutableMapOf()
+    ) = get<T>("$path/$id", kClass, headers)
+
+    suspend fun <T> putById(
+        body: Any? = null,
+        path: String,
+        id: String,
+        kClass: KClass<*> = Unit::class,
+        headers: Map<String, String> = mutableMapOf()
+    ) = put<T>(body, "$path/$id", kClass, headers)
+
+    suspend fun <T> deleteById(
+        body: Any? = null,
+        path: String,
+        id: String,
+        kClass: KClass<*> = Unit::class,
+        headers: Map<String, String> = mutableMapOf()
+    ) = delete<T>(body, "$path/$id", kClass, headers)
 }

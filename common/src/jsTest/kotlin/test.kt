@@ -1,9 +1,6 @@
-import kotlinext.js.asJsObject
-import kotlinext.js.getOwnPropertyNames
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
-import me.kshulzh.farm.api.AnimalService
+import me.kshulzh.farm.client.AnimalServiceHttpClient
 import me.kshulzh.farm.dto.AnimalDto
 import me.kshulzh.farm.http.HttpClientImpl
 import kotlin.test.Test
@@ -24,10 +21,25 @@ import kotlin.test.Test
  *   limitations under the License.
  */
 
-class test {
-    @Test
-    fun a() {
-        println(AnimalService::class.js.asDynamic())
+class aTest {
 
+    @Test
+    fun a() = runTest {
+        val b = HttpClientImpl("http://127.0.0.1:8080")
+        launch {
+            val c = b.getById<AnimalDto>("/animals-service/animals", "46")
+            println(c.gender)
+        }.start()
+    }
+
+    @Test
+    fun n() = runTest {
+        val b = AnimalServiceHttpClient(HttpClientImpl("http://127.0.0.1:8080"))
+        launch {
+            val c = b.addAnimal(AnimalDto().apply {
+                id = "124556"
+            })
+            println(c.id)
+        }.start()
     }
 }

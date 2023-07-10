@@ -14,10 +14,12 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm.client
+package me.kshulzh.farm.entity
 
-import kotlin.reflect.KClass
-
-interface ServiceWrapper {
-    fun <T> wrap(klass:KClass<*>)
+class Item : Entity() {
+    var name: String? = null
+    var description: String? = null
+    var price: Double? = null
+    var itemCode: String? = null
+    var spentMoney: Double? = null
 }

@@ -23,14 +23,14 @@ import me.kshulzh.farm.dto.IngredientTypeDto
 import me.kshulzh.farm.dto.ProduceFeedDto
 
 interface FeedService {
-    fun addReceipt(feedRecipe: FeedRecipeDto)
-    fun editReceipt(feedRecipe: FeedRecipeDto)
-    fun deleteReceipt(feedRecipeId: String)
-    fun getReceipt(feedRecipeId: String): FeedRecipeDto
-    fun getReceipts(criteria: Map<String, String>?): List<FeedRecipeDto>
+    fun addRecipe(feedRecipe: FeedRecipeDto): FeedRecipeDto
+    fun editRecipe(feedRecipe: FeedRecipeDto): FeedRecipeDto
+    fun deleteRecipe(feedRecipeId: String)
+    fun getRecipe(feedRecipeId: String): FeedRecipeDto
+    fun getRecipes(criteria: Map<String, String>?): List<FeedRecipeDto>
 
-    fun addIngredient(ingredient: IngredientTypeDto)
-    fun editIngredient(ingredient: IngredientTypeDto)
+    fun addIngredient(ingredient: IngredientTypeDto): IngredientTypeDto
+    fun editIngredient(ingredient: IngredientTypeDto): IngredientTypeDto
     fun deleteIngredient(ingredientId: String)
     fun getIngredient(ingredientId: String): IngredientTypeDto
     fun getIngredients(criteria: Map<String, String>?): List<IngredientTypeDto>

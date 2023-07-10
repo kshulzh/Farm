@@ -61,7 +61,7 @@ class FeedServiceImpl : FeedService {
     lateinit var feedRepository: FeedRepository
 
     @Autowired
-    lateinit var ingredientypeMapper: IngredientypeMapper
+    lateinit var ingredienTypeMapper: IngredientypeMapper
 
     @Autowired
     lateinit var ingredientMapper: IngredientMapper
@@ -73,24 +73,25 @@ class FeedServiceImpl : FeedService {
     lateinit var feedMapper: FeedMapper
 
 
-    override fun addReceipt(feedRecipe: FeedRecipeDto) {
+    override fun addRecipe(feedRecipe: FeedRecipeDto): FeedRecipeDto {
         val recipe = feedRecipeMapper.toEntity(feedRecipe)
-        feedRecipeRepository.save(recipe)
+        val savedRecipe = feedRecipeRepository.save(recipe)
         ingredientTypeRepository.save(IngredientType().apply {
             id = recipe.ingredientId
             name = recipe.name
         })
+        return feedRecipeMapper.toDto(savedRecipe)
     }
 
-    override fun editReceipt(feedRecipe: FeedRecipeDto) {
-        feedRecipeRepository.save(feedRecipeMapper.toEntity(feedRecipe))
+    override fun editRecipe(feedRecipe: FeedRecipeDto): FeedRecipeDto {
+        return feedRecipeMapper.toDto(feedRecipeRepository.save(feedRecipeMapper.toEntity(feedRecipe)))
     }
 
-    override fun deleteReceipt(feedRecipeId: String) {
+    override fun deleteRecipe(feedRecipeId: String) {
         feedRecipeRepository.deleteById(feedRecipeId) ?: throw RecipeNotFoundException(feedRecipeId)
     }
 
-    override fun getReceipt(feedRecipeId: String): FeedRecipeDto {
+    override fun getRecipe(feedRecipeId: String): FeedRecipeDto {
         return feedRecipeMapper.toDto(
             feedRecipeRepository.findById(feedRecipeId) ?: throw RecipeNotFoundException(
                 feedRecipeId
@@ -98,16 +99,16 @@ class FeedServiceImpl : FeedService {
         )
     }
 
-    override fun getReceipts(criteria: Map<String, String>?): List<FeedRecipeDto> {
+    override fun getRecipes(criteria: Map<String, String>?): List<FeedRecipeDto> {
         TODO("Not yet implemented")
     }
 
-    override fun addIngredient(ingredient: IngredientTypeDto) {
-        ingredientTypeRepository.save(ingredientypeMapper.toEntity(ingredient))
+    override fun addIngredient(ingredient: IngredientTypeDto): IngredientTypeDto {
+        return ingredienTypeMapper.toDto(ingredientTypeRepository.save(ingredienTypeMapper.toEntity(ingredient)))
     }
 
-    override fun editIngredient(ingredient: IngredientTypeDto) {
-        ingredientTypeRepository.save(ingredientypeMapper.toEntity(ingredient))
+    override fun editIngredient(ingredient: IngredientTypeDto): IngredientTypeDto {
+        return ingredienTypeMapper.toDto(ingredientTypeRepository.save(ingredienTypeMapper.toEntity(ingredient)))
     }
 
     override fun deleteIngredient(ingredientId: String) {
@@ -115,7 +116,7 @@ class FeedServiceImpl : FeedService {
     }
 
     override fun getIngredient(ingredientId: String): IngredientTypeDto {
-        return ingredientypeMapper.toDto(
+        return ingredienTypeMapper.toDto(
             ingredientTypeRepository.findById(ingredientId) ?: throw IngredientTypeNotFoundException(ingredientId)
         )
     }

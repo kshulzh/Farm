@@ -18,6 +18,7 @@ package me.kshulzh.farm.mappers
 
 import me.kshulzh.farm.dto.AnimalDto
 import me.kshulzh.farm.entity.Animal
+import me.kshulzh.farm.entity.Gender
 import me.kshulzh.farm.exception.AnimalSpecieNotFoundException
 import me.kshulzh.farm.id
 import me.kshulzh.farm.repository.AnimalSpeciesRepository
@@ -35,7 +36,7 @@ class AnimalMapper : MapperEntityDto<Animal, AnimalDto> {
         return Animal().apply {
             id = dto.id ?: id()
             type = dto.type
-            gender = dto.gender
+            gender = Gender.valueOf(dto.gender)
             specie =
                 dto.specieId?.let { animalSpeciesRepository.findById(it) ?: throw AnimalSpecieNotFoundException(id) }
             weight = dto.weight
@@ -46,7 +47,7 @@ class AnimalMapper : MapperEntityDto<Animal, AnimalDto> {
         return AnimalDto().apply {
             id = entity.id
             type = entity.type
-            gender = entity.gender
+            gender = entity.gender.name
             specieId = entity.specie?.id
             weight = entity.weight
         }

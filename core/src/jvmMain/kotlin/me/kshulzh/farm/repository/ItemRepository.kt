@@ -14,13 +14,10 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm.client
+package me.kshulzh.farm.repository
 
-import kotlin.reflect.KClass
+import me.kshulzh.farm.entity.Item
+import org.springframework.stereotype.Repository
 
-
-actual class HttpClientServiceWrapper : ServiceWrapper {
-    override fun <T> wrap(klass: KClass<*>) {
-
-    }
-}
+@Repository
+interface ItemRepository : EntityRepository<Item>

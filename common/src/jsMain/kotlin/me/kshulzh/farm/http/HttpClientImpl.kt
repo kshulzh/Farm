@@ -18,37 +18,35 @@ package me.kshulzh.farm.http
 
 import kotlinx.browser.window
 import kotlinx.coroutines.await
-import kotlinx.coroutines.delay
-import me.kshulzh.farm.api.AnimalService
-import me.kshulzh.farm.dto.AnimalDto
 import org.w3c.fetch.Headers
 import org.w3c.fetch.RequestInit
-import org.w3c.fetch.Response
-import org.w3c.xhr.XMLHttpRequest
-import kotlin.js.Promise
-import kotlin.js.json
+import kotlin.reflect.KClass
 
-actual class HttpClientImpl actual constructor(var url:String) : HttpClient {
-    override suspend fun <T> request(method: Method, body: Any?, path: String, headers: Map<String, String>): T {
-        var res:Response? = null
+actual class HttpClientImpl actual constructor(var url: String) : HttpClient {
+    override suspend fun <T> request(
+        method: Method,
+        body: Any?,
+        path: String,
+        kClass: KClass<*>,
+        headers: Map<String, String>
+    ): T {
         try {
             val res =
                 window.fetch(
                     input = "$url$path",
                     init = RequestInit(
-                        body = body,
+                        body = JSON.stringify(body),
                         method = method.name,
                         headers = Headers().apply {
-                            append("content-type" , "application/json")
+                            append("content-type", "application/json")
                             headers.forEach {
-                                append(it.key,it.value)
+                                append(it.key, it.value)
                             }
-                            //append("Access-Control-Allow-Origin", url)
                         }.asDynamic()
                     )
                 ).await()
             return if (res.ok) res.json().await().unsafeCast<T>() else throw RuntimeException("${res.status}")
-        } catch (e:Throwable) {
+        } catch (e: Throwable) {
             e.printStackTrace()
             throw RuntimeException(e.message)
         }

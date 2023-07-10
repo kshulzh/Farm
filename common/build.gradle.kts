@@ -30,15 +30,21 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
+                implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.20")
             }
         }
         val commonTest by getting {
             dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
                 implementation(kotlin("test"))
             }
         }
         val jvmMain by getting {
             dependencies {
+                runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
+
+                implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
+                implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
                 implementation("io.ktor:ktor-server-netty:2.0.2")
                 implementation("io.ktor:ktor-server-html-builder-jvm:2.0.2")
                 implementation("io.ktor:ktor-server-cors:2.0.2")
@@ -53,9 +59,6 @@ kotlin {
         }
         val jsMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
-                implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.20")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react:18.2.0-pre.346")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom:18.2.0-pre.346")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion:11.9.3-pre.346")

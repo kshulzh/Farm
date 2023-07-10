@@ -17,42 +17,52 @@
 package me.kshulzh.farm.controller
 
 import me.kshulzh.farm.api.FeedServiceHTTP
-import me.kshulzh.farm.dto.*
-import org.springframework.web.bind.annotation.*
+import me.kshulzh.farm.dto.FeedDto
+import me.kshulzh.farm.dto.FeedRecipeDto
+import me.kshulzh.farm.dto.FillStorageDto
+import me.kshulzh.farm.dto.IngredientTypeDto
+import me.kshulzh.farm.dto.ProduceFeedDto
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class FeedController : FeedServiceHTTP {
-    override fun addReceipt(feedRecipe: FeedRecipeDto) {
-        TODO()
-    }
-    override fun editReceipt(feedRecipe: FeedRecipeDto) {
-        TODO()
-    }
-    override fun deleteReceipt(feedRecipeId: String) {
-        TODO()
-    }
-    override fun getReceipt(feedRecipeId: String) : FeedRecipeDto {
-        TODO()
-    }
-    override fun getReceipts(criteria: Map<String,String>?) : List<FeedRecipeDto> {
+    override fun addRecipe(feedRecipe: FeedRecipeDto): FeedRecipeDto {
         TODO()
     }
 
-    override fun addIngredient(ingredient: IngredientTypeDto) {
+    override fun editRecipe(feedRecipe: FeedRecipeDto): FeedRecipeDto {
         TODO()
     }
 
-    override fun editIngredient(ingredient: IngredientTypeDto) {
+    override fun deleteRecipe(feedRecipeId: String) {
+        TODO()
+    }
+
+    override fun getRecipe(feedRecipeId: String): FeedRecipeDto {
+        TODO()
+    }
+
+    override fun getRecipes(criteria: Map<String, String>?): List<FeedRecipeDto> {
+        TODO()
+    }
+
+    override fun addIngredient(ingredient: IngredientTypeDto): IngredientTypeDto {
+        TODO()
+    }
+
+    override fun editIngredient(ingredient: IngredientTypeDto): IngredientTypeDto {
         TODO()
     }
 
     override fun deleteIngredient(ingredientId: String) {
         TODO()
     }
-    override fun getIngredient(ingredientId: String) : IngredientTypeDto {
+
+    override fun getIngredient(ingredientId: String): IngredientTypeDto {
         TODO()
     }
-    override fun getIngredients(criteria: Map<String,String>?) : List<IngredientTypeDto> {
+
+    override fun getIngredients(criteria: Map<String, String>?): List<IngredientTypeDto> {
         TODO()
     }
 
@@ -64,13 +74,14 @@ class FeedController : FeedServiceHTTP {
         TODO("Not yet implemented")
     }
 
-    override fun getLeftovers(criteria: Map<String,String>?) : List<IngredientTypeDto> {
+    override fun getLeftovers(criteria: Map<String, String>?): List<IngredientTypeDto> {
         TODO()
     }
 
     override fun produce(produceFeedDto: ProduceFeedDto) {
         TODO()
     }
+
     override fun feed(feedDto: FeedDto) {
         TODO()
     }

@@ -20,14 +20,17 @@ import me.kshulzh.farm.api.AnimalServiceHTTP
 import me.kshulzh.farm.dto.AnimalDto
 import me.kshulzh.farm.dto.AnimalInSectionDto
 import me.kshulzh.farm.dto.AnimalSpeciesDto
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
 
 @RestController
 class AnimalController : AnimalServiceHTTP {
 
-    override fun addAnimal(@RequestBody animal: AnimalDto) {
+    override fun addAnimal(@RequestBody animal: AnimalDto): AnimalDto {
         println(animal)
+        return animal
     }
 
     override fun deleteAnimal(@PathVariable("id") id: String) {
@@ -38,7 +41,7 @@ class AnimalController : AnimalServiceHTTP {
         TODO()
     }
 
-    override fun getAnimalById(id: String) : AnimalDto {
+    override fun getAnimalById(id: String): AnimalDto {
         println(LocalDateTime.now())
         return AnimalDto()
     }

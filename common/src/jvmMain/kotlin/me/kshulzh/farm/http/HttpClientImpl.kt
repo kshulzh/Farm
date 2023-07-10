@@ -16,8 +16,30 @@
 
 package me.kshulzh.farm.http
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import java.net.URI
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
+import kotlin.reflect.KClass
+
 actual class HttpClientImpl actual constructor(var url: String) : HttpClient {
-    override suspend fun <T> request(method: Method, body: Any?, path: String, headers: Map<String, String>): T {
-        return khttp.get(path).text as T
+    val mapper = ObjectMapper()
+    override suspend fun <T> request(
+        method: Method,
+        body: Any?,
+        path: String,
+        kClass: KClass<*>,
+        headers: Map<String, String>
+    ): T {
+
+        return mapper.readValue(
+            java.net.http.HttpClient.newHttpClient()
+                .send(
+                    HttpRequest.newBuilder()
+                        .header("content-type", "application/json")
+                        .method(method.name, HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(body)))
+                        .uri(URI("$url$path")).build(), HttpResponse.BodyHandlers.ofString()
+                ).body(), kClass.java
+        ) as T
     }
 }

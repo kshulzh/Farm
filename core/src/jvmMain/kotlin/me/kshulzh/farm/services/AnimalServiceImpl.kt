@@ -58,12 +58,12 @@ class AnimalServiceImpl : AnimalService {
     @Autowired
     lateinit var animalInSectionMapper: AnimalInSectionMapper
 
-    override fun addAnimal(animal: AnimalDto) {
+    override fun addAnimal(animal: AnimalDto): AnimalDto {
         if (animal.specieId != null) {
             animalSpeciesRepository.findById(animal.specieId!!)
                 ?: throw AnimalSpecieNotFoundException(animal.specieId!!)
         }
-        animalRepository.save(animalMapper.toEntity(animal))
+        return animalMapper.toDto(animalRepository.save(animalMapper.toEntity(animal)))
     }
 
     override fun deleteAnimal(id: String) {

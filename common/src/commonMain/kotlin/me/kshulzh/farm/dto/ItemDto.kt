@@ -14,6 +14,12 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm.annotation
+package me.kshulzh.farm.dto
 
-annotation class RequestMapping(val path: String = "")
+class ItemDto : EntityDto() {
+    var name: String? = null
+    var description: String? = null
+    var price: Double? = null
+    var itemCode: String? = null
+    var spentMoney: Double? = null
+}

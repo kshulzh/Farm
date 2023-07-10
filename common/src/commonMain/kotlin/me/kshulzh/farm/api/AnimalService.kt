@@ -22,7 +22,6 @@ import me.kshulzh.farm.dto.AnimalDto
 import me.kshulzh.farm.dto.AnimalInSectionDto
 import me.kshulzh.farm.dto.AnimalSpeciesDto
 import kotlin.js.JsExport
-import kotlin.js.JsName
 
 interface AnimalService {
 
@@ -32,7 +31,7 @@ interface AnimalService {
      * @param animal
      * @return void
      */
-    fun addAnimal(animal: AnimalDto)
+    fun addAnimal(animal: AnimalDto): AnimalDto
 
     /**
      * remove animal from db
