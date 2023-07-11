@@ -12,6 +12,7 @@
 
 # Package Files #
 *.jar
+!server/server-0.1.jar
 *.war
 *.nar
 *.ear

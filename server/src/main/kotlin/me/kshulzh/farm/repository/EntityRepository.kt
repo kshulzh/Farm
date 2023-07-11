@@ -14,17 +14,8 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm
+package me.kshulzh.farm.repository
 
+import org.springframework.data.jpa.repository.JpaRepository
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
-
-@EnableJpaRepositories()
-@SpringBootApplication
-class Main
-
-fun main(args: Array<String>) {
-    runApplication<Main>(*args)
-}
+fun <T, S> JpaRepository<T, S>.searchById(id: S): T? = findById(id).orElse(null)

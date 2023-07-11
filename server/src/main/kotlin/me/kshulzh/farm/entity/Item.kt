@@ -14,17 +14,18 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm
+package me.kshulzh.farm.entity
 
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
-
-@EnableJpaRepositories()
-@SpringBootApplication
-class Main
-
-fun main(args: Array<String>) {
-    runApplication<Main>(*args)
+@Entity
+class Item {
+    @Id
+    lateinit var id: String
+    var name: String? = null
+    var description: String? = null
+    var price: Double? = null
+    var itemCode: String? = null
+    var spentMoney: Double? = null
 }

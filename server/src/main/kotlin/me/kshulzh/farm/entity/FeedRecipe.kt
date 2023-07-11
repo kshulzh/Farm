@@ -14,17 +14,21 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm
+package me.kshulzh.farm.entity
 
+import jakarta.persistence.Convert
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import me.kshulzh.farm.mappers.IngredientsMapConverterJson
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+@Entity
+class FeedRecipe {
+    @Id
+    lateinit var id: String
+    lateinit var ingredientId: String
+    var name: String? = null
+    var description: String? = null
 
-@EnableJpaRepositories()
-@SpringBootApplication
-class Main
-
-fun main(args: Array<String>) {
-    runApplication<Main>(*args)
+    @Convert(converter = IngredientsMapConverterJson::class)
+    var ingredients: Map<IngredientType, Double>? = null
 }

@@ -14,17 +14,23 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm
+package me.kshulzh.farm.entity
 
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
+import java.time.LocalDateTime
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+@Entity
+class AnimalsInSection {
+    @Id
+    lateinit var id: String
+    lateinit var startDate: LocalDateTime
+    var endDate: LocalDateTime? = null
 
-@EnableJpaRepositories()
-@SpringBootApplication
-class Main
+    @ManyToOne
+    lateinit var animal: Animal
 
-fun main(args: Array<String>) {
-    runApplication<Main>(*args)
+    @ManyToOne
+    var section: Section? = null
 }

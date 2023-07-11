@@ -1,7 +1,3 @@
-import org.gradle.kotlin.dsl.extra
-import org.gradle.kotlin.dsl.kotlin
-import org.gradle.kotlin.dsl.maven
-
 pluginManagement {
     repositories {
         google()
@@ -20,6 +16,5 @@ pluginManagement {
 }
 rootProject.name = "Farm"
 include("server")
-include("core")
-include("ui","ui:android", "ui:desktop", "ui:common")
+include("ui", "ui:android", "ui:desktop", "ui:common")
 include("common")

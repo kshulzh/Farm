@@ -14,17 +14,32 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm
+package me.kshulzh.farm.entity
 
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.Table
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+@Entity
+@Table(name = "animals")
+class Animal {
+    @Id
+    lateinit var id: String
 
-@EnableJpaRepositories()
-@SpringBootApplication
-class Main
+    @Column(name = "gender")
+    var gender: Gender = Gender.NONE
 
-fun main(args: Array<String>) {
-    runApplication<Main>(*args)
+    @Column(name = "weight")
+    var weight: Double? = null
+
+    @ManyToOne
+    var specie: AnimalSpecie? = null
+
+    @Column(name = "type")
+    var type: AnimalType? = null
+
+    @ManyToOne
+    var section: Section? = null
 }

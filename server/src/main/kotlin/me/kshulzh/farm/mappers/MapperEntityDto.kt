@@ -14,17 +14,17 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm
+package me.kshulzh.farm.mappers
 
+interface MapperEntityDto<E, D> {
+    fun mapToEntity(dto: D?): E? {
+        return if (dto == null) null else toEntity(dto)
+    }
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+    fun mapToDto(entity: E?): D? {
+        return if (entity == null) null else toDto(entity)
+    }
 
-@EnableJpaRepositories()
-@SpringBootApplication
-class Main
-
-fun main(args: Array<String>) {
-    runApplication<Main>(*args)
+    fun toEntity(dto: D): E
+    fun toDto(entity: E): D
 }

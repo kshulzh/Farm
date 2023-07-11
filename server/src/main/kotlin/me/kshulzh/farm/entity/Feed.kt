@@ -14,17 +14,23 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm
+package me.kshulzh.farm.entity
 
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
+import java.time.LocalDateTime
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+@Entity
+class Feed {
+    @Id
+    lateinit var id: String
 
-@EnableJpaRepositories()
-@SpringBootApplication
-class Main
+    @ManyToOne
+    lateinit var ingredientType: IngredientType
+    lateinit var count: String
 
-fun main(args: Array<String>) {
-    runApplication<Main>(*args)
+    @ManyToOne
+    lateinit var section: Section
+    lateinit var time: LocalDateTime
 }

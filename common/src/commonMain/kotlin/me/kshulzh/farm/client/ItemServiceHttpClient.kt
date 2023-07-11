@@ -18,6 +18,8 @@ package me.kshulzh.farm.client
 
 import me.kshulzh.farm.dto.ItemDto
 import me.kshulzh.farm.http.HttpClient
+import kotlin.reflect.KClass
+import kotlin.reflect.typeOf
 
 class ItemServiceHttpClient(val httpClient: HttpClient) {
     companion object {
@@ -39,7 +41,10 @@ class ItemServiceHttpClient(val httpClient: HttpClient) {
     }
 
     suspend fun getItems(): Array<ItemDto> {
-        return httpClient.get(ITEMS_SERVICE_ITEMS_URL, kClass = Array<ItemDto>::class)
+        return httpClient.get(
+            ITEMS_SERVICE_ITEMS_URL,
+            (typeOf<Array<ItemDto>>().classifier!! as KClass<Array<ItemDto>>)
+        )
     }
 
     suspend fun deleteItem(id: String) {

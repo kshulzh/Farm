@@ -14,17 +14,21 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm
+package me.kshulzh.farm.entity
 
+import jakarta.persistence.Convert
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import me.kshulzh.farm.mappers.StringIntMapConventerJson
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+@Entity
+class Section {
+    @Id
+    lateinit var id: String
 
-@EnableJpaRepositories()
-@SpringBootApplication
-class Main
-
-fun main(args: Array<String>) {
-    runApplication<Main>(*args)
+    @Convert(converter = StringIntMapConventerJson::class)
+    var capacity: Map<String, Int> = mutableMapOf()
+    var width: Double? = null
+    var height: Double? = null
+    var depth: Double? = null
 }

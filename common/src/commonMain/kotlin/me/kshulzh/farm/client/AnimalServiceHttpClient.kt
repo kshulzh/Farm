@@ -20,6 +20,8 @@ import me.kshulzh.farm.dto.AnimalDto
 import me.kshulzh.farm.dto.AnimalInSectionDto
 import me.kshulzh.farm.dto.AnimalSpeciesDto
 import me.kshulzh.farm.http.HttpClient
+import kotlin.reflect.KClass
+import kotlin.reflect.typeOf
 
 class AnimalServiceHttpClient(val httpClient: HttpClient) {
     companion object {
@@ -53,10 +55,16 @@ class AnimalServiceHttpClient(val httpClient: HttpClient) {
     }
 
     suspend fun getAllAnimals(): Array<AnimalDto> {
-        return httpClient.get(ANIMAL_SERVICE_ANIMALS_URL, Array<AnimalDto>::class)
+        return httpClient.get(
+            ANIMAL_SERVICE_ANIMALS_URL,
+            (typeOf<Array<AnimalDto>>().classifier!! as KClass<Array<AnimalDto>>)
+        )
     }
 
     suspend fun getAllAnimalSpecies(): Array<AnimalSpeciesDto> {
-        return httpClient.get(ANIMAL_SERVICE_ANIMALS_SPECIES_URL, Array<AnimalSpeciesDto>::class)
+        return httpClient.get(
+            ANIMAL_SERVICE_ANIMALS_SPECIES_URL,
+            (typeOf<Array<AnimalSpeciesDto>>().classifier!! as KClass<Array<AnimalSpeciesDto>>)
+        )
     }
 }

@@ -14,17 +14,20 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm
+package me.kshulzh.farm.entity
 
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import java.time.LocalDateTime
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
-
-@EnableJpaRepositories()
-@SpringBootApplication
-class Main
-
-fun main(args: Array<String>) {
-    runApplication<Main>(*args)
+@Entity
+class IngredientType {
+    @Id
+    lateinit var id: String
+    var type: String = ""
+    var name: String? = null
+    var price: Double? = null
+    var description: String? = null
+    lateinit var date: LocalDateTime
+    var barcode: String? = null
 }

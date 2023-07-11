@@ -22,6 +22,8 @@ import me.kshulzh.farm.dto.FillStorageDto
 import me.kshulzh.farm.dto.IngredientTypeDto
 import me.kshulzh.farm.dto.ProduceFeedDto
 import me.kshulzh.farm.http.HttpClient
+import kotlin.reflect.KClass
+import kotlin.reflect.typeOf
 
 
 class FeedServiceHttpClient(val httpClient: HttpClient) {
@@ -58,7 +60,10 @@ class FeedServiceHttpClient(val httpClient: HttpClient) {
     }
 
     suspend fun getRecipes(criteria: Map<String, String>?): Array<FeedRecipeDto> {
-        return httpClient.get(path = FEED_SERVICE_RECIPES_URL, kClass = Array<FeedRecipeDto>::class)
+        return httpClient.get(
+            path = FEED_SERVICE_RECIPES_URL,
+            kClass = (typeOf<Array<FeedRecipeDto>>().classifier!! as KClass<Array<FeedRecipeDto>>)
+        )
     }
 
     suspend fun addIngredient(ingredient: IngredientTypeDto): IngredientTypeDto {
@@ -82,7 +87,10 @@ class FeedServiceHttpClient(val httpClient: HttpClient) {
     }
 
     suspend fun getIngredients(criteria: Map<String, String>?): Array<IngredientTypeDto> {
-        return httpClient.get(path = FEED_SERVICE_INGREDIENTS_URL, Array<IngredientTypeDto>::class)
+        return httpClient.get(
+            path = FEED_SERVICE_INGREDIENTS_URL,
+            (typeOf<Array<IngredientTypeDto>>().classifier!! as KClass<Array<IngredientTypeDto>>)
+        )
     }
 
     suspend fun fillStorage(ingredient: FillStorageDto) {
@@ -90,11 +98,18 @@ class FeedServiceHttpClient(val httpClient: HttpClient) {
     }
 
     suspend fun getLeftovers(ingredientId: String): Array<FillStorageDto> {
-        return httpClient.getById(FEED_SERVICE_LEFTOVERS_URL, ingredientId, Array<FillStorageDto>::class)
+        return httpClient.getById(
+            FEED_SERVICE_LEFTOVERS_URL,
+            ingredientId,
+            (typeOf<Array<FillStorageDto>>().classifier!! as KClass<Array<FillStorageDto>>)
+        )
     }
 
     suspend fun getLeftovers(criteria: Map<String, String>?): Array<IngredientTypeDto> {
-        return httpClient.get(FEED_SERVICE_LEFTOVERS_URL, Array<FillStorageDto>::class)
+        return httpClient.get(
+            FEED_SERVICE_LEFTOVERS_URL,
+            (typeOf<Array<IngredientTypeDto>>().classifier!! as KClass<Array<IngredientTypeDto>>)
+        )
     }
 
     suspend fun produce(produceFeedDto: ProduceFeedDto) {

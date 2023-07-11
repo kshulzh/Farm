@@ -14,17 +14,18 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm
+package me.kshulzh.farm.entity
 
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.persistence.OneToOne
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+@Entity
+class IngredientSum {
+    @Id
+    lateinit var id: String
+    lateinit var leftovers: String
 
-@EnableJpaRepositories()
-@SpringBootApplication
-class Main
-
-fun main(args: Array<String>) {
-    runApplication<Main>(*args)
+    @OneToOne
+    lateinit var ingredientType: IngredientType
 }

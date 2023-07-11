@@ -1,6 +1,5 @@
 plugins {
     kotlin("multiplatform") version "1.8.20"
-    application
     jacoco
     `maven-publish`
 }
@@ -45,10 +44,6 @@ kotlin {
 
                 implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
                 implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
-                implementation("io.ktor:ktor-server-netty:2.0.2")
-                implementation("io.ktor:ktor-server-html-builder-jvm:2.0.2")
-                implementation("io.ktor:ktor-server-cors:2.0.2")
-                implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2")
                 implementation("khttp:khttp:0.1.0")
             }
         }
@@ -64,26 +59,13 @@ kotlin {
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion:11.9.3-pre.346")
             }
         }
-        val jsTest by getting {
-            dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
-            }
-        }
+        val jsTest by getting
     }
-}
-
-application {
-    mainClass.set("me.kshulzh.farm.ServerKt")
 }
 
 tasks.named<Copy>("jvmProcessResources") {
     val jsBrowserDistribution = tasks.named("jsBrowserDistribution")
     from(jsBrowserDistribution)
-}
-
-tasks.named<JavaExec>("run") {
-    dependsOn(tasks.named<Jar>("jvmJar"))
-    classpath(tasks.named<Jar>("jvmJar"))
 }
 
 jacoco {
