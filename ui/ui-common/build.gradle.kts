@@ -27,6 +27,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation("${extra["farm.group"]!!}:common:${extra["farm.version"]!!}")
                 api(compose.runtime)
                 api(compose.foundation)
                 api(compose.material)

@@ -16,5 +16,5 @@ pluginManagement {
 }
 rootProject.name = "Farm"
 include("server")
-include("ui", "ui:android", "ui:desktop", "ui:common")
+include("ui", "ui:android", "ui:desktop", "ui:ui-common")
 include("common")

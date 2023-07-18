@@ -31,15 +31,23 @@ actual class HttpClientImpl actual constructor(var url: String) : HttpClient {
         kClass: KClass<*>,
         headers: Map<String, String>
     ): T {
+        val responce = java.net.http.HttpClient.newHttpClient()
+            .send(
+                HttpRequest.newBuilder()
+                    .header("content-type", "application/json")
+                    .method(method.name, HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(body)))
+                    .uri(URI("$url$path")).build(), HttpResponse.BodyHandlers.ofString()
+            )
+        if (responce.statusCode()>399) {
+            //todo
+            throw RuntimeException()
+        }
+        if (responce.body().isBlank()) {
+            return Unit as T
+        }
 
         return mapper.readValue(
-            java.net.http.HttpClient.newHttpClient()
-                .send(
-                    HttpRequest.newBuilder()
-                        .header("content-type", "application/json")
-                        .method(method.name, HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(body)))
-                        .uri(URI("$url$path")).build(), HttpResponse.BodyHandlers.ofString()
-                ).body(), kClass.java
+            responce.body(), kClass.java
         ) as T
     }
 }

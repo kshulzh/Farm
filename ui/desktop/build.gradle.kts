@@ -17,7 +17,7 @@ kotlin {
             dependencies {
                 implementation(project(":common"))
                 implementation(compose.desktop.currentOs)
-                implementation("$group:common-desktop:$version")
+                implementation("$group:ui-common-desktop:$version")
             }
         }
         val jvmTest by getting
