@@ -1,4 +1,11 @@
 import kotlinx.browser.document
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.js.Proxy
+import me.kshulzh.farm.api.AnimalService
+import me.kshulzh.farm.dto.AnimalDto
+import me.kshulzh.farm.http.HttpClientImpl
 import react.create
 import react.dom.client.createRoot
 

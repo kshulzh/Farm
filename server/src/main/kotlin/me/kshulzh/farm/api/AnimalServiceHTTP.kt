@@ -19,13 +19,18 @@ package me.kshulzh.farm.api
 import me.kshulzh.farm.dto.AnimalDto
 import me.kshulzh.farm.dto.AnimalInSectionDto
 import me.kshulzh.farm.dto.AnimalSpeciesDto
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 
 @RequestMapping("/animals-service")
 interface AnimalServiceHTTP : AnimalService {
 
     @PostMapping("/animals")
-    override fun addAnimal(@RequestBody animal: AnimalDto)
+    override fun addAnimal(@RequestBody animal: AnimalDto): AnimalDto
 
     @DeleteMapping("/animals/{id}")
     override fun deleteAnimal(@PathVariable("id") id: String)
@@ -34,15 +39,15 @@ interface AnimalServiceHTTP : AnimalService {
     override fun move(@RequestBody animalInSectionDto: AnimalInSectionDto)
 
     @GetMapping("/animals/{id}")
-    override fun getAnimalById(@PathVariable("id") id: String) : AnimalDto
+    override fun getAnimalById(@PathVariable("id") id: String): AnimalDto
 
     @GetMapping("/animals")
-    override fun getAllAnimals() : List<AnimalDto>
+    override fun getAllAnimals(): List<AnimalDto>
 
     @PostMapping("/animalsSpecies")
-    override fun addAnimalSpecie(@RequestBody animalSpecieDto: AnimalSpeciesDto) : AnimalSpeciesDto
+    override fun addAnimalSpecie(@RequestBody animalSpecieDto: AnimalSpeciesDto): AnimalSpeciesDto
 
     @GetMapping("/animalsSpecies")
-    override fun getAllAnimalSpecies() : List<AnimalSpeciesDto>
+    override fun getAllAnimalSpecies(): List<AnimalSpeciesDto>
 
 }

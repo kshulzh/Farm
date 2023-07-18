@@ -1,6 +1,5 @@
 plugins {
     kotlin("multiplatform") version "1.8.20"
-    application
     jacoco
     `maven-publish`
 }
@@ -27,15 +26,25 @@ kotlin {
         }
     }
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
+                implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.20")
+            }
+        }
         val commonTest by getting {
             dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
                 implementation(kotlin("test"))
             }
         }
         val jvmMain by getting {
             dependencies {
+                runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
 
+                implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
+                implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+                implementation("khttp:khttp:0.1.0")
             }
         }
         val jvmTest by getting {
@@ -54,18 +63,9 @@ kotlin {
     }
 }
 
-application {
-    mainClass.set("org.example.application.ServerKt")
-}
-
 tasks.named<Copy>("jvmProcessResources") {
     val jsBrowserDistribution = tasks.named("jsBrowserDistribution")
     from(jsBrowserDistribution)
-}
-
-tasks.named<JavaExec>("run") {
-    dependsOn(tasks.named<Jar>("jvmJar"))
-    classpath(tasks.named<Jar>("jvmJar"))
 }
 
 jacoco {
