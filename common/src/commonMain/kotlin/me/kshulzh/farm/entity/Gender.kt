@@ -14,6 +14,7 @@
  *   limitations under the License.
  */
 @file:JsExport
+
 package me.kshulzh.farm.entity
 
 import kotlin.js.JsExport

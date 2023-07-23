@@ -19,6 +19,10 @@ package me.kshulzh.farm.http
 import kotlin.reflect.KClass
 
 interface HttpClient {
+    companion object {
+        fun of(url: String) = HttpClientImpl(url)
+    }
+
     suspend fun <T> request(
         method: Method,
         body: Any? = null,

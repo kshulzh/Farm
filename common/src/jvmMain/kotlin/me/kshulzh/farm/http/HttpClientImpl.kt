@@ -16,14 +16,14 @@
 
 package me.kshulzh.farm.http
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import java.net.URI
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
+import com.google.gson.Gson
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 import kotlin.reflect.KClass
 
 actual class HttpClientImpl actual constructor(var url: String) : HttpClient {
-    val mapper = ObjectMapper()
+    val mapper = Gson()
     override suspend fun <T> request(
         method: Method,
         body: Any?,
@@ -31,23 +31,27 @@ actual class HttpClientImpl actual constructor(var url: String) : HttpClient {
         kClass: KClass<*>,
         headers: Map<String, String>
     ): T {
-        val responce = java.net.http.HttpClient.newHttpClient()
-            .send(
-                HttpRequest.newBuilder()
-                    .header("content-type", "application/json")
-                    .method(method.name, HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(body)))
-                    .uri(URI("$url$path")).build(), HttpResponse.BodyHandlers.ofString()
-            )
-        if (responce.statusCode()>399) {
+        val connection: HttpURLConnection = URL("$url$path").openConnection() as HttpURLConnection
+        connection.setRequestProperty("content-type", "application/json")
+        headers.forEach {
+            connection.setRequestProperty(it.key, it.value)
+        }
+        connection.requestMethod = method.name
+        if (body != null) {
+            connection.doOutput = true
+            connection.outputStream.write(mapper.toJson(body).toByteArray())
+        }
+        connection.connect()
+        if (connection.responseCode > 399) {
             //todo
             throw RuntimeException()
         }
-        if (responce.body().isBlank()) {
+        if (connection.responseCode != 200) {
             return Unit as T
         }
 
-        return mapper.readValue(
-            responce.body(), kClass.java
+        return mapper.fromJson(
+            InputStreamReader(connection.inputStream), kClass.java
         ) as T
     }
 }

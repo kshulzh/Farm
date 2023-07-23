@@ -26,6 +26,7 @@ class SectionController : SectionServiceHTTP {
     override fun addSection(sectionDto: SectionDto) {
         TODO()
     }
+
     override fun collect(collectDto: SectionCollectDto) {
         TODO()
     }
