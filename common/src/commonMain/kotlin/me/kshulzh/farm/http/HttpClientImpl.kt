@@ -16,4 +16,4 @@
 
 package me.kshulzh.farm.http
 
-expect class HttpClientImpl(url:String) : HttpClient
+expect class HttpClientImpl(url: String) : HttpClient

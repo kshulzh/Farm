@@ -14,19 +14,24 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm.api
+package me.kshulzh.farm.ui.common.lang
 
-import me.kshulzh.farm.dto.SectionCollectDto
-import me.kshulzh.farm.dto.SectionDto
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
+interface Phrases {
+    companion object {
+        val LANGS = mutableMapOf("en" to EnPhrases)
+    }
 
-@RequestMapping("/section-service")
-interface SectionServiceHTTP : SectionService {
-    @PostMapping("/sections")
-    override fun addSection(@RequestBody sectionDto: SectionDto)
-
-    @PostMapping("/collect")
-    override fun collect(@RequestBody collectDto: SectionCollectDto)
+    val SAVE: String
+    val NAME: String
+    val DESCRIPTION: String
+    val UNNAMED: String
+    val PRICE: String
+    val ITEM_CODE: String
+    val SPENT_MONEY: String
+    val SETTINGS: String
+    val CANCEL: String
+    val ITEMS: String
+    val DELETE: String
+    val MENU: String
+    val NEW: String
 }

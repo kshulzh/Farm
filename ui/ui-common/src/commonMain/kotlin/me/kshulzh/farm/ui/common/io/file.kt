@@ -14,19 +14,11 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm.api
+package me.kshulzh.farm.ui.common.io
 
-import me.kshulzh.farm.dto.SectionCollectDto
-import me.kshulzh.farm.dto.SectionDto
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
+import java.io.InputStream
+import java.io.OutputStream
 
-@RequestMapping("/section-service")
-interface SectionServiceHTTP : SectionService {
-    @PostMapping("/sections")
-    override fun addSection(@RequestBody sectionDto: SectionDto)
+expect fun writeToFile(file: String): OutputStream
 
-    @PostMapping("/collect")
-    override fun collect(@RequestBody collectDto: SectionCollectDto)
-}
+expect fun readFromFile(file: String): InputStream

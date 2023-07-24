@@ -5,12 +5,12 @@ buildscript {
     }
 
     dependencies {
-        classpath ("com.android.tools.build:gradle:7.3.1")
-        classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20")
+        classpath("com.android.tools.build:gradle:7.3.1")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20")
     }
 }
 plugins {
-    kotlin("multiplatform")
+    kotlin("multiplatform") version "1.8.20"
     id("org.jetbrains.compose")
     id("com.android.library")
     `maven-publish`
@@ -27,7 +27,10 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("${extra["farm.group"]!!}:common:${extra["farm.version"]!!}")
+                implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
+                implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+                //implementation("${extra["farm.group"]!!}:common:${extra["farm.version"]!!}")
+                implementation(project(":common"))
                 api(compose.runtime)
                 api(compose.foundation)
                 api(compose.material)

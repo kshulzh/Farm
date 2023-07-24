@@ -1,6 +1,7 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+
 plugins {
-    kotlin("multiplatform")
+    kotlin("multiplatform") version "1.8.20"
     id("org.jetbrains.compose")
 }
 
@@ -9,7 +10,7 @@ version = extra["farm.ui.version"]!!
 
 kotlin {
     jvm {
-        jvmToolchain(11)
+        jvmToolchain(17)
         withJava()
     }
     sourceSets {
@@ -17,7 +18,8 @@ kotlin {
             dependencies {
                 implementation(project(":common"))
                 implementation(compose.desktop.currentOs)
-                implementation("$group:ui-common-desktop:$version")
+                //implementation("$group:ui-common-desktop:$version")
+                implementation(project(":ui:ui-common"))
             }
         }
         val jvmTest by getting

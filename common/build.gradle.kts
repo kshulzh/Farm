@@ -42,9 +42,7 @@ kotlin {
             dependencies {
                 runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
 
-                implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
-                implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
-                implementation("khttp:khttp:0.1.0")
+                implementation("com.google.code.gson:gson:2.8.6")
             }
         }
         val jvmTest by getting {
