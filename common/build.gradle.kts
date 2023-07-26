@@ -4,8 +4,8 @@ plugins {
     `maven-publish`
 }
 
-group = extra["farm.group"]!!
-version = extra["farm.version"]!!
+group = extra["farm.common.group"]!!
+version = extra["farm.common.version"]!!
 
 kotlin {
     jvm {
@@ -41,6 +41,7 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
+                implementation("org.apache.tika:tika-parsers:1.28.3")
 
                 implementation("com.google.code.gson:gson:2.8.6")
             }

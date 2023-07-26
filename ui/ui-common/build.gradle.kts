@@ -1,4 +1,6 @@
+
 buildscript {
+
     repositories {
         google()
         mavenCentral()
@@ -15,7 +17,6 @@ plugins {
     id("com.android.library")
     `maven-publish`
 }
-
 group = extra["farm.ui.group"]!!
 version = extra["farm.ui.version"]!!
 
@@ -30,6 +31,7 @@ kotlin {
                 implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
                 implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
                 //implementation("${extra["farm.group"]!!}:common:${extra["farm.version"]!!}")
+                implementation(project(":common:main"))
                 implementation(project(":common"))
                 api(compose.runtime)
                 api(compose.foundation)
@@ -43,8 +45,8 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                api("androidx.appcompat:appcompat:1.6.1")
-                api("androidx.core:core-ktx:1.10.1")
+                implementation("androidx.appcompat:appcompat:1.6.1")
+                implementation("androidx.core:core-ktx:1.10.1")
             }
         }
 //        val androidTest by getting {
@@ -62,11 +64,12 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(33)
+    namespace = "me.kshulzh.farm.ui.common"
+    compileSdk = 34
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(24)
-        targetSdkVersion(33)
+        minSdk = 24
+        targetSdk = 34
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -74,12 +77,12 @@ android {
     }
 }
 
-publishing {
-    publications {
-        register<MavenPublication>("release") {
-            afterEvaluate {
-                from(components["release"])
-            }
-        }
-    }
-}
+//publishing {
+//    publications {
+//        register<MavenPublication>("release") {
+//            afterEvaluate {
+//                from(components["release"])
+//            }
+//        }
+//    }
+//}
