@@ -18,8 +18,8 @@ package me.kshulzh.farm.ui.common.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.coroutines.asCoroutineDispatcher
-import me.kshulzh.farm.client.ItemServiceHttpClient
-import me.kshulzh.farm.http.HttpClient
+import me.kshulzh.farm.main.client.ItemServiceHttpClient
+import me.kshulzh.farm.common.http.HttpClient
 import me.kshulzh.farm.ui.common.io.readFromFile
 import me.kshulzh.farm.ui.common.io.writeToFile
 import me.kshulzh.farm.ui.common.lang.EnPhrases

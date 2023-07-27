@@ -43,8 +43,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import me.kshulzh.farm.dto.ItemDto
-import me.kshulzh.farm.id
+import me.kshulzh.farm.common.id
+import me.kshulzh.farm.main.dto.ItemDto
 import me.kshulzh.farm.ui.common.components.PropertyComponent
 import me.kshulzh.farm.ui.common.config.coroutine
 import me.kshulzh.farm.ui.common.config.fontSize

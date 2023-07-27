@@ -1,13 +1,22 @@
 volumes:
   postgres-data:
 services:
-  server:
-    container_name: server
-    build: server
+  main:
+    container_name: server_main
+    build: server/main
+    restart: always
     ports:
-      - "8080:8080"
+      - "8100:8100"
     links:
       - postgres
+    networks:
+      network-example:
+  file-service:
+    container_name: server_file-service
+    build: server/file-service
+    restart: always
+    ports:
+      - "8101:8101"
     networks:
       network-example:
   postgres:

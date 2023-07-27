@@ -22,19 +22,18 @@ version = extra["farm.ui.version"]!!
 dependencies {
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha08")
-    //implementation("$group:common:$version")
+    implementation("androidx.compose.material3:material3:1.1.1")
     implementation(project(":ui:ui-common"))
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 }
 
 android {
-    compileSdkVersion(33)
+    namespace = "me.kshulzh.farm.ui.android"
+    compileSdk = 34
     defaultConfig {
         multiDexEnabled = true
         applicationId = "$group.android"
-        minSdkVersion(24)
-        targetSdkVersion(33)
+        minSdk = 24
+        targetSdk = 34
         versionCode = 1
         versionName = version.toString()
     }

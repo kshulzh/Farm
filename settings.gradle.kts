@@ -2,8 +2,11 @@ pluginManagement {
     repositories {
         google()
         gradlePluginPortal()
+        mavenLocal()
         mavenCentral()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        maven("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
+        maven("https://maven.google.com")
     }
 
     plugins {
@@ -15,6 +18,6 @@ pluginManagement {
     }
 }
 rootProject.name = "Farm"
-include("server")
+include("server","server:main","server:file-service")
 include("ui", "ui:android", "ui:desktop", "ui:ui-common")
-include("common")
+include("common","common:main","common:file-service")
