@@ -17,7 +17,30 @@
 package me.kshulzh.farm.common
 
 import kotlin.random.Random
+import kotlin.random.nextUBytes
 
+@OptIn(ExperimentalUnsignedTypes::class)
 fun id(): String {
-    return Random.nextLong().toString()
+    val randomBytes = UByteArray(16)
+    Random.nextUBytes(randomBytes)
+    randomBytes[6] = (randomBytes[6].toInt() and 0x0f).toUByte() /* clear version        */
+    randomBytes[6] = (randomBytes[6].toInt() or 0x40).toUByte() /* set to version 4     */
+    randomBytes[8] = (randomBytes[8].toInt() and 0x3f).toUByte() /* clear variant        */
+    randomBytes[8] = (randomBytes[8].toInt() or 0x80).toUByte()
+    return "${bytesToHexNum(randomBytes, 4, 0)}-${bytesToHexNum(randomBytes, 2, 4)}-${
+        bytesToHexNum(
+            randomBytes,
+            2,
+            6
+        )
+    }-${bytesToHexNum(randomBytes, 2, 8)}-${bytesToHexNum(randomBytes, 6, 10)}"
+}
+
+@OptIn(ExperimentalUnsignedTypes::class)
+fun bytesToHexNum(bytes: UByteArray, length: Int, offset: Int): String {
+    return bytes.copyOfRange(offset, offset + length).joinToString("") { it.toString(16).padStart(2, '0') }
+}
+
+fun fileExtension(path: String): String {
+    return path.substring(path.lastIndexOf('.') + 1)
 }

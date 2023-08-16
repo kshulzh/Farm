@@ -18,8 +18,9 @@ package me.kshulzh.farm.ui.common.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.coroutines.asCoroutineDispatcher
-import me.kshulzh.farm.main.client.ItemServiceHttpClient
 import me.kshulzh.farm.common.http.HttpClient
+import me.kshulzh.farm.fileservice.client.FileServiceHttpClient
+import me.kshulzh.farm.main.client.ItemServiceHttpClient
 import me.kshulzh.farm.ui.common.io.readFromFile
 import me.kshulzh.farm.ui.common.io.writeToFile
 import me.kshulzh.farm.ui.common.lang.EnPhrases
@@ -32,7 +33,8 @@ var config = loadConfig()
 class Config {
     var url: String? = null
         set(value) {
-            itemServiceHttpClient = ItemServiceHttpClient(HttpClient.of(value!!))
+            itemServiceHttpClient = ItemServiceHttpClient(HttpClient.of("${value ?: ""}:8100"))
+            fileService = FileServiceHttpClient(HttpClient.of("${value ?: ""}:8101"))
             field = value
         }
     var lang: String = "en"
@@ -43,7 +45,8 @@ class Config {
 }
 
 var phrases: Phrases = EnPhrases
-var itemServiceHttpClient: ItemServiceHttpClient = ItemServiceHttpClient(HttpClient.of(config.url ?: ""))
+var itemServiceHttpClient: ItemServiceHttpClient = ItemServiceHttpClient(HttpClient.of("${config.url ?: ""}:8100"))
+var fileService = FileServiceHttpClient(HttpClient.of("${config.url ?: ""}:8101"))
 var coroutine = Executors.newCachedThreadPool().asCoroutineDispatcher()
 const val CONFIG_FILE = "config.json"
 fun saveConfig() {

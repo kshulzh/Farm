@@ -17,23 +17,31 @@
 package me.kshulzh.farm.common.http
 
 import com.google.gson.Gson
-import me.kshulzh.farm.common.io.mkDir
 import me.kshulzh.farm.common.io.transferTo
-import org.apache.cxf.attachment.ContentDisposition
-import org.apache.tika.Tika
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.InputStream
 import java.io.InputStreamReader
+import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.io.PrintWriter
 import java.net.HttpURLConnection
 import java.net.URL
+import java.net.URLConnection
 import kotlin.reflect.KClass
 
 
 actual class HttpClientImpl actual constructor(var url: String) : HttpClient {
     val mapper = Gson()
+
+    companion object {
+        var writeToFile: (String) -> OutputStream = { FileOutputStream(it) }
+
+        var readFromFile: (String) -> InputStream = { FileInputStream(it) }
+        var folderPath = ""
+    }
+
     override suspend fun <T> request(
         method: Method,
         body: Any?,
@@ -64,17 +72,11 @@ actual class HttpClientImpl actual constructor(var url: String) : HttpClient {
             return Unit as T
         }
         if (connection.getHeaderField("Content-Disposition") != null) {
-            val contentDisposition: ContentDisposition =
-                ContentDisposition(connection.getHeaderField("Content-Disposition"))
-            val path = path.substring("/files/".length)
-            mkDir(path)
-            val file = File(path)
-            println(file.absolutePath)
-            file.createNewFile()
-            val fileOutputStream = FileOutputStream(file)
+            val path = folderPath + path.substring("/files/".length)
+            val fileOutputStream = writeToFile(path)
             transferTo(connection.inputStream, fileOutputStream)
             @Suppress("UNCHECKED_CAST")
-            return file as T
+            return File(path) as T
         }
 
         @Suppress("UNCHECKED_CAST")
@@ -85,29 +87,21 @@ actual class HttpClientImpl actual constructor(var url: String) : HttpClient {
 
     fun loadFile(body: File, connection: HttpURLConnection) {
         val boundary = (System.currentTimeMillis()).toULong().toString()
-        val CRLF = "\r\n" // Line separator required by multipart/form-data.
+        val CRLF = "\r\n"
         connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary)
         connection.setRequestProperty("Content-Disposition", "form-data")
         connection.doOutput = true
         val outputStream = connection.outputStream
-        val tika = Tika()
-        val mimeType: String = tika.detect(body)
+        val mimeType: String = URLConnection.guessContentTypeFromName(body.name)
         val writer = PrintWriter(OutputStreamWriter(outputStream, "UTF-8"), true)
-//        connection.setRequestProperty("Content-Type",mimeType)
-//        connection.setRequestProperty("name","file")
-//        connection.setRequestProperty("filename",body.name)
-//        connection.setRequestProperty("charset","UTF-8")
-        //connection.setRequestProperty("filepath", body.canonicalPath)
-        // Send text file.
+
         writer.append("--" + boundary).append(CRLF)
         writer.append("Content-Disposition: form-data; name=\"file\"; filename=\"${body.name}\"$CRLF")
         writer.append("Content-Type: $mimeType; charset=UTF-8$CRLF") // Text file itself must be saved in this charset!
         writer.append(CRLF).flush()
 
-        val inputStream = FileInputStream(body)
+        val inputStream = readFromFile(body.absolutePath)
         transferTo(inputStream, outputStream)
-
-        //outputStream.flush(); // Important before continuing with writer!
         writer.append(CRLF).flush() // CRLF is important! It indicates end of boundary.
         writer.append("--" + boundary + "--").append(CRLF).flush()
     }

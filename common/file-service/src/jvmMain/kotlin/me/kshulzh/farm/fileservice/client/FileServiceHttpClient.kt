@@ -18,24 +18,24 @@ package me.kshulzh.farm.fileservice.client
 
 import me.kshulzh.farm.common.dto.FileDto
 import me.kshulzh.farm.common.http.HttpClient
-import java.io.File
+import me.kshulzh.farm.common.io.PlatformFile
 import kotlin.reflect.KClass
 import kotlin.reflect.typeOf
 
-actual class FileServiceHttpClient(val httpClient: HttpClient) {
+actual class FileServiceHttpClient actual constructor(val httpClient: HttpClient) {
     companion object {
         const val PREFIX = "/files/"
     }
 
-    suspend fun uploadFile(file: File, path: String = ""): FileDto {
+    actual suspend fun uploadFile(file: PlatformFile, path: String): FileDto {
         return httpClient.post(file, PREFIX + path, FileDto::class)
     }
 
-    suspend fun getFiles(path: String): Array<FileDto> {
+    actual suspend fun getFiles(path: String): Array<FileDto> {
         return httpClient.get(PREFIX + path, kClass = (typeOf<Array<FileDto>>().classifier!! as KClass<*>))
     }
 
-    suspend fun downloadFile(path: String): File {
-        return httpClient.get(PREFIX + path, File::class)
+    actual suspend fun downloadFile(path: String): PlatformFile {
+        return httpClient.get(PREFIX + path, PlatformFile::class)
     }
 }

@@ -18,37 +18,24 @@ package me.kshulzh.farm.ui.common.io
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.graphics.BitmapFactory
+import android.net.Uri
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import java.io.*
 
 @SuppressLint("StaticFieldLeak")
 lateinit var activity: Activity
 actual fun writeToFile(file: String): OutputStream {
-//    if (SDK_INT >= Build.VERSION_CODES.R) {
-//        Log.d("myz", "" + SDK_INT)
-//        if (!Environment.isExternalStorageManager()) {
-//            ActivityCompat.requestPermissions(
-//                activity, arrayOf<String>(
-//                    Manifest.permission.READ_EXTERNAL_STORAGE,
-//                    Manifest.permission.MANAGE_EXTERNAL_STORAGE
-//                ), 1
-//            ) //permission request code is just an int
-//        }
-//    } else {
-//        if (ActivityCompat.checkSelfPermission(
-//                activity,
-//                Manifest.permission.READ_EXTERNAL_STORAGE
-//            ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
-//                activity,
-//                Manifest.permission.WRITE_EXTERNAL_STORAGE
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            ActivityCompat.requestPermissions(
-//                activity,
-//                arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
-//                1
-//            )
-//        }
-//    }
+    val parts = file.split("/").dropLastWhile {
+        it.contains(".")
+    }
+    var part = ""
+    parts.forEach {
+        part += it
+        File(activity.applicationContext.filesDir, part).mkdir()
+        part += File.separator
+    }
     val f = File(activity.applicationContext.filesDir, file)
     return FileOutputStream(f)
 }
@@ -56,4 +43,12 @@ actual fun writeToFile(file: String): OutputStream {
 actual fun readFromFile(file: String): InputStream {
     val f = File(activity.applicationContext.filesDir, file)
     return FileInputStream(f)
+}
+
+actual fun readFromFileByUri(uri: String): InputStream {
+    return activity.contentResolver.openInputStream(Uri.parse(uri))!!
+}
+
+actual fun readBitmap(file: String): ImageBitmap {
+    return BitmapFactory.decodeStream(readFromFile(file)).asImageBitmap()
 }

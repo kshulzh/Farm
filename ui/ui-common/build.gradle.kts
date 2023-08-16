@@ -1,4 +1,3 @@
-
 buildscript {
 
     repositories {
@@ -12,7 +11,7 @@ buildscript {
     }
 }
 plugins {
-    kotlin("multiplatform") version "1.8.20"
+    kotlin("multiplatform")
     id("org.jetbrains.compose")
     id("com.android.library")
     `maven-publish`
@@ -30,8 +29,8 @@ kotlin {
             dependencies {
                 implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
                 implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
-                //implementation("${extra["farm.group"]!!}:common:${extra["farm.version"]!!}")
                 implementation(project(":common:main"))
+                implementation(project(":common:file-service"))
                 implementation(project(":common"))
                 api(compose.runtime)
                 api(compose.foundation)
@@ -46,6 +45,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation("androidx.appcompat:appcompat:1.6.1")
+                implementation("androidx.activity:activity-compose:1.7.2")
                 implementation("androidx.core:core-ktx:1.10.1")
             }
         }
@@ -57,6 +57,22 @@ kotlin {
         val desktopMain by getting {
             dependencies {
                 api(compose.preview)
+                val lwjglVersion = "3.3.1"
+                listOf("lwjgl", "lwjgl-tinyfd").forEach { lwjglDep ->
+                    implementation("org.lwjgl:${lwjglDep}:${lwjglVersion}")
+                    listOf(
+                        "natives-windows",
+                        "natives-windows-x86",
+                        "natives-windows-arm64",
+                        "natives-macos",
+                        "natives-macos-arm64",
+                        "natives-linux",
+                        "natives-linux-arm64",
+                        "natives-linux-arm32"
+                    ).forEach { native ->
+                        runtimeOnly("org.lwjgl:${lwjglDep}:${lwjglVersion}:${native}")
+                    }
+                }
             }
         }
         val desktopTest by getting
@@ -75,6 +91,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+}
+dependencies {
+    implementation(project(mapOf("path" to ":common:file-service")))
 }
 
 //publishing {

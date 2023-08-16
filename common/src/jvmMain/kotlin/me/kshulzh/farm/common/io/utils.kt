@@ -33,6 +33,10 @@ fun mkDir(path: String) {
     }
 }
 
+fun fileExtension(path: String): String {
+    return path.substring(path.lastIndexOf('.') + 1)
+}
+
 fun transferTo(inputStream: InputStream, outputStream: OutputStream) {
     val buffer = ByteArray(SIZE)
     var len: Int = inputStream.read(buffer)

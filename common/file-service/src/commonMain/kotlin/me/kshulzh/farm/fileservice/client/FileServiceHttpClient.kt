@@ -16,4 +16,12 @@
 
 package me.kshulzh.farm.fileservice.client
 
-expect class FileServiceHttpClient
+import me.kshulzh.farm.common.dto.FileDto
+import me.kshulzh.farm.common.http.HttpClient
+import me.kshulzh.farm.common.io.PlatformFile
+
+expect class FileServiceHttpClient(httpClient: HttpClient) {
+    suspend fun uploadFile(file: PlatformFile, path: String = ""): FileDto
+    suspend fun getFiles(path: String): Array<FileDto>
+    suspend fun downloadFile(path: String): PlatformFile
+}

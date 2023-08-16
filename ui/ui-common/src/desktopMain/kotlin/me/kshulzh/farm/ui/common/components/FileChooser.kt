@@ -1,0 +1,63 @@
+/*
+ *   Copyright (c) 2023. Kyrylo Shulzhenko
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+package me.kshulzh.farm.ui.common.components
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import java.io.File
+
+data class ChosenFileImpl(
+    override val path: String,
+    override val file: File,
+    override val uri: String,
+) : ChosenFile
+
+@Composable
+actual fun FileChooser(
+    show: Boolean,
+    path: String?,
+    directory: Boolean,
+    multiple: Boolean,
+    fileExtensions: List<String>,
+    onChoose: (List<ChosenFile>?) -> Unit
+) {
+    if (show) {
+        LaunchedEffect(Unit) {
+            val fileFilter = if (fileExtensions.isNotEmpty()) {
+                fileExtensions.joinToString(",")
+            } else {
+                ""
+            }
+
+            val initialDir = path ?: System.getProperty("user.dir")
+            val filePath = if (!directory) FilePicker.chooseFile(
+                initialDirectory = initialDir,
+                fileExtensions = fileFilter
+            ) else {
+                val initialDir = path ?: System.getProperty("user.dir")
+                FilePicker.chooseDirectory(initialDir)
+            }
+            if (filePath != null) {
+                onChoose(filePath.map {
+                    ChosenFileImpl(it, File(it), File(it).toURI().toString())
+                })
+            } else {
+                onChoose(null)
+            }
+        }
+    }
+}

@@ -2,11 +2,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
-    id("org.springframework.boot") version "3.0.1"
-    id("io.spring.dependency-management") version "1.1.0"
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
     kotlin("jvm")
-    kotlin("plugin.spring") version "1.8.20"
-    kotlin("plugin.jpa") version "1.8.20"
+    kotlin("plugin.spring")
+    kotlin("plugin.jpa")
     `maven-publish`
 }
 

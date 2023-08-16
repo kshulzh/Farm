@@ -1,5 +1,5 @@
 plugins {
-    kotlin("multiplatform") version "1.8.20"
+    kotlin("multiplatform")
     jacoco
     `maven-publish`
 }
@@ -28,20 +28,20 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
-                implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.20")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${extra["kotlinx.version"]!!}")
+                implementation("org.jetbrains.kotlin:kotlin-reflect:${extra["kotlin.version"]!!}")
                 implementation(project(":common"))
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${extra["kotlinx.version"]!!}")
                 implementation(kotlin("test"))
             }
         }
         val jvmMain by getting {
             dependencies {
-                runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
+                runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android:${extra["kotlinx.version"]!!}")
 
                 implementation("com.google.code.gson:gson:2.8.6")
             }

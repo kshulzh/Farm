@@ -14,18 +14,25 @@
  *   limitations under the License.
  */
 
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
-import me.kshulzh.farm.common.http.HttpClientImpl
-import me.kshulzh.farm.ui.common.App
-import me.kshulzh.farm.ui.common.io.readFromFile
-import me.kshulzh.farm.ui.common.io.writeToFile
+package me.kshulzh.farm.ui.common.utils
 
+import java.math.BigInteger
+import java.security.MessageDigest
 
-fun main() = application {
-    HttpClientImpl.readFromFile = ::readFromFile
-    HttpClientImpl.writeToFile = ::writeToFile
-    Window(onCloseRequest = ::exitApplication) {
-        App()
+actual fun md5(byteArray: ByteArray): String {
+    var messageDigest: MessageDigest? = null
+    var digest: ByteArray? = null
+    messageDigest = MessageDigest.getInstance("MD5")
+    messageDigest.reset()
+    messageDigest.update(byteArray)
+    digest = messageDigest.digest()
+
+    val bigInt = BigInteger(1, digest)
+    var md5Hex = bigInt.toString(16)
+
+    while (md5Hex.length < 32) {
+        md5Hex = "0$md5Hex"
     }
+
+    return md5Hex
 }

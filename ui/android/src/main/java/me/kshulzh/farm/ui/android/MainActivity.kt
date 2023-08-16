@@ -20,13 +20,18 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material3.MaterialTheme
+import me.kshulzh.farm.common.http.HttpClientImpl
 import me.kshulzh.farm.ui.common.App
 import me.kshulzh.farm.ui.common.io.activity
+import me.kshulzh.farm.ui.common.io.readFromFile
+import me.kshulzh.farm.ui.common.io.writeToFile
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity = this
+        HttpClientImpl.readFromFile = ::readFromFile
+        HttpClientImpl.writeToFile = ::writeToFile
         setContent {
             MaterialTheme {
                 App()

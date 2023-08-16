@@ -14,18 +14,23 @@
  *   limitations under the License.
  */
 
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
-import me.kshulzh.farm.common.http.HttpClientImpl
-import me.kshulzh.farm.ui.common.App
-import me.kshulzh.farm.ui.common.io.readFromFile
-import me.kshulzh.farm.ui.common.io.writeToFile
+package me.kshulzh.farm.ui.common.components
 
+import androidx.compose.runtime.Composable
+import java.io.File
 
-fun main() = application {
-    HttpClientImpl.readFromFile = ::readFromFile
-    HttpClientImpl.writeToFile = ::writeToFile
-    Window(onCloseRequest = ::exitApplication) {
-        App()
-    }
+interface ChosenFile {
+    val path: String
+    val uri: String
+    val file: File
 }
+
+@Composable
+expect fun FileChooser(
+    show: Boolean,
+    path: String? = null,
+    directory: Boolean = false,
+    multiple: Boolean = false,
+    fileExtensions: List<String> = listOf(),
+    onChoose: (List<ChosenFile>?) -> Unit
+)

@@ -16,9 +16,12 @@
 
 package me.kshulzh.farm.ui.common.io
 
+import androidx.compose.ui.graphics.ImageBitmap
 import java.io.InputStream
 import java.io.OutputStream
 
 expect fun writeToFile(file: String): OutputStream
 
 expect fun readFromFile(file: String): InputStream
+expect fun readBitmap(file: String): ImageBitmap
+expect fun readFromFileByUri(uri: String): InputStream

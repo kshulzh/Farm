@@ -23,6 +23,7 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.compose.material3:material3:1.1.1")
+    implementation(project(":common"))
     implementation(project(":ui:ui-common"))
 }
 

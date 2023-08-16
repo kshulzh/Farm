@@ -14,18 +14,6 @@
  *   limitations under the License.
  */
 
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
-import me.kshulzh.farm.common.http.HttpClientImpl
-import me.kshulzh.farm.ui.common.App
-import me.kshulzh.farm.ui.common.io.readFromFile
-import me.kshulzh.farm.ui.common.io.writeToFile
+package me.kshulzh.farm.ui.common.utils
 
-
-fun main() = application {
-    HttpClientImpl.readFromFile = ::readFromFile
-    HttpClientImpl.writeToFile = ::writeToFile
-    Window(onCloseRequest = ::exitApplication) {
-        App()
-    }
-}
+expect fun md5(byteArray: ByteArray): String

@@ -16,4 +16,23 @@
 
 package me.kshulzh.farm.fileservice.client
 
-actual class FileServiceHttpClient
+import me.kshulzh.farm.common.dto.FileDto
+import me.kshulzh.farm.common.http.HttpClient
+import me.kshulzh.farm.common.io.PlatformFile
+
+actual class FileServiceHttpClient actual constructor(val httpClient: HttpClient) {
+    actual suspend fun uploadFile(
+        file: PlatformFile,
+        path: String
+    ): FileDto {
+        TODO("Not yet implemented")
+    }
+
+    actual suspend fun getFiles(path: String): Array<FileDto> {
+        TODO("Not yet implemented")
+    }
+
+    actual suspend fun downloadFile(path: String): PlatformFile {
+        TODO("Not yet implemented")
+    }
+}
