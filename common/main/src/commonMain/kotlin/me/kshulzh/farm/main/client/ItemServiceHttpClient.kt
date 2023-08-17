@@ -26,7 +26,7 @@ class ItemServiceHttpClient(val httpClient: HttpClient) {
         const val ITEMS_SERVICE_URL = "/items-service"
         const val ITEMS = "/items"
         const val ITEMS_SERVICE_ITEMS_URL =
-            "${Companion.ITEMS_SERVICE_URL}$ITEMS"
+            "${ITEMS_SERVICE_URL}$ITEMS"
     }
 
     suspend fun addItem(item: ItemDto): ItemDto {

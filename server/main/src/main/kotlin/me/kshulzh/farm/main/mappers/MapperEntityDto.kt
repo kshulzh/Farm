@@ -25,6 +25,10 @@ interface MapperEntityDto<E, D> {
         return if (entity == null) null else toDto(entity)
     }
 
+    fun mapListToDto(entities: List<E>): List<D> {
+        return entities.map { toDto(it) }
+    }
+
     fun toEntity(dto: D): E
     fun toDto(entity: E): D
 }

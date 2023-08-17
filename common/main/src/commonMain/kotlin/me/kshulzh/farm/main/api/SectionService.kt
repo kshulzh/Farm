@@ -20,6 +20,11 @@ import me.kshulzh.farm.main.dto.SectionCollectDto
 import me.kshulzh.farm.main.dto.SectionDto
 
 interface SectionService {
-    fun addSection(sectionDto: SectionDto)
+    fun addSection(sectionDto: SectionDto): SectionDto
+
+    fun deleteSection(id: String)
+
+    fun editSection(sectionDto: SectionDto): SectionDto
+    fun getAllSections(): List<SectionDto>
     fun collect(collectDto: SectionCollectDto)
 }

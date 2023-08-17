@@ -17,17 +17,49 @@
 package me.kshulzh.farm.main.controller
 
 import me.kshulzh.farm.main.api.SectionService
+import me.kshulzh.farm.main.client.SectionServiceHttpClient.Companion.COLLECT
+import me.kshulzh.farm.main.client.SectionServiceHttpClient.Companion.SECTIONS
+import me.kshulzh.farm.main.client.SectionServiceHttpClient.Companion.SECTION_SERVICE_URL
 import me.kshulzh.farm.main.dto.SectionCollectDto
 import me.kshulzh.farm.main.dto.SectionDto
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+@RequestMapping(SECTION_SERVICE_URL)
 @RestController
 class SectionController : SectionService {
-    override fun addSection(sectionDto: SectionDto) {
-        TODO()
+    @Autowired
+    lateinit var sectionService: SectionService
+
+    @PostMapping(SECTIONS)
+    override fun addSection(@RequestBody sectionDto: SectionDto): SectionDto {
+        return sectionService.addSection(sectionDto)
     }
 
-    override fun collect(collectDto: SectionCollectDto) {
-        TODO()
+    @DeleteMapping(SECTIONS)
+    override fun deleteSection(@PathVariable("id") id: String) {
+        sectionService.deleteSection(id)
+    }
+
+    @PutMapping(SECTIONS)
+    override fun editSection(@RequestBody sectionDto: SectionDto): SectionDto {
+        return sectionService.editSection(sectionDto)
+    }
+
+    @GetMapping(SECTIONS)
+    override fun getAllSections(): List<SectionDto> {
+        return sectionService.getAllSections()
+    }
+
+    @PostMapping(COLLECT)
+    override fun collect(@RequestBody collectDto: SectionCollectDto) {
+        return sectionService.collect(collectDto)
     }
 }
