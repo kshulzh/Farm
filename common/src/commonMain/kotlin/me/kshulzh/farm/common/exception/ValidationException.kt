@@ -14,23 +14,13 @@
  *   limitations under the License.
  */
 
-package me.kshulzh.farm.main.entity
+package me.kshulzh.farm.common.exception
 
-import jakarta.persistence.Convert
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import me.kshulzh.farm.main.mappers.StringIntMapConventerJson
-
-@Entity
-class Section {
-    @Id
-    lateinit var id: String
-
-    @Convert(converter = StringIntMapConventerJson::class)
-    var capacity: Map<String, Int> = mutableMapOf()
-    var number: Long = 0
-    var name: String? = null
-    var width: Double? = null
-    var height: Double? = null
-    var depth: Double? = null
+open class ValidationException(val field:String,val condition:String,val actual:String) : FarmException() {
+    companion object {
+        const val NOT_NULL = "not null"
+        const val NOT_ZERO = "not zero"
+    }
+    override val message: String?
+        get() = "Field '${this.field}' must be $condition. Actual is $actual"
 }

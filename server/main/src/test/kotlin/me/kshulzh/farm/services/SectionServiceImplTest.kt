@@ -48,6 +48,7 @@ class SectionServiceImplTest : BasicTest() {
     val sectionDtos = listOf(
         SectionDto().apply {
             id = id()
+            number = 1
             capacity = mapOf("1" to 40)
         }
     )
@@ -61,6 +62,7 @@ class SectionServiceImplTest : BasicTest() {
     fun shouldSaveSection() {
         Mockito.`when`(sectionRepository.save(any())).thenReturn(Section().apply {
             id = sectionDtos[0].id!!
+            number = 1
             capacity = sectionDtos[0].capacity
         })
         sectionServiceImpl.addSection(sectionDtos[0])
@@ -90,6 +92,7 @@ class SectionServiceImplTest : BasicTest() {
         Mockito.`when`(sectionRepository.save(any())).thenReturn(Section().apply {
             id = sectionDtos[0].id!!
             capacity = sectionDtos[0].capacity
+            number = 1
         })
         sectionServiceImpl.editSection(sectionDtos[0])
         verify(sectionRepository, times(1)).save(capture(sectionArgumentCaptor))

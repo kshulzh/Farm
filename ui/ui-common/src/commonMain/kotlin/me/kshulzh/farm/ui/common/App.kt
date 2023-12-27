@@ -108,7 +108,7 @@ fun App() {
 fun MainApp() {
     tempApp = remember { mutableStateOf(Apps.SETTINGS) }
     when (tempApp.value) {
-        Apps.ITEMS -> ItemsApp()
+        Apps.ITEMS -> ItemsApp.ItemsApp()
         Apps.SETTINGS -> SettingsApp()
     }
 }

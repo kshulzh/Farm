@@ -43,7 +43,7 @@ class SectionServiceHttpClient(val httpClient: HttpClient) {
         return httpClient.put(sectionDto, SECTION_SERVICE_SECTIONS, SectionDto::class)
     }
 
-    suspend fun getAllSections(): List<SectionDto> {
+    suspend fun getAllSections(): Array<SectionDto> {
         return httpClient.get(
             SECTION_SERVICE_SECTIONS,
             (typeOf<Array<SectionDto>>().classifier!! as KClass<*>)

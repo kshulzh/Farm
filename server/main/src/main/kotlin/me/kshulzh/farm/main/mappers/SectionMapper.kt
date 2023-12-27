@@ -16,6 +16,7 @@
 
 package me.kshulzh.farm.main.mappers
 
+import me.kshulzh.farm.common.exception.ValidationException
 import me.kshulzh.farm.main.entity.Section
 import me.kshulzh.farm.common.id
 import me.kshulzh.farm.main.dto.SectionDto
@@ -26,6 +27,8 @@ class SectionMapper : MapperEntityDto<Section, SectionDto> {
     override fun toEntity(dto: SectionDto): Section {
         return Section().apply {
             id = dto.id ?: id()
+            number = dto.number ?: throw ValidationException("name",ValidationException.NOT_NULL,"null")
+            name = dto.name
             capacity = dto.capacity
             width = dto.width
             height = dto.height
@@ -36,6 +39,8 @@ class SectionMapper : MapperEntityDto<Section, SectionDto> {
     override fun toDto(entity: Section): SectionDto {
         return SectionDto().apply {
             id = entity.id
+            number = entity.number
+            name = entity.name
             capacity = entity.capacity
             width = entity.width
             height = entity.height

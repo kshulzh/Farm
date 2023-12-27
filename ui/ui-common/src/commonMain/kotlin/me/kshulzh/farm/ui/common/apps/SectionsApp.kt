@@ -14,18 +14,14 @@
  *   limitations under the License.
  */
 
-@file:OptIn(ExperimentalFoundationApi::class)
-
 package me.kshulzh.farm.ui.common.apps
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -33,9 +29,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -45,93 +41,95 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.kshulzh.farm.common.id
 import me.kshulzh.farm.main.dto.ItemDto
+import me.kshulzh.farm.main.dto.SectionDto
 import me.kshulzh.farm.ui.common.components.ActionCircularProgressIndicator
+import me.kshulzh.farm.ui.common.components.MapPropertyComponent
 import me.kshulzh.farm.ui.common.components.PropertyComponent
 import me.kshulzh.farm.ui.common.config.coroutine
 import me.kshulzh.farm.ui.common.config.fontSize
 import me.kshulzh.farm.ui.common.config.itemServiceHttpClient
 import me.kshulzh.farm.ui.common.config.phrases
+import me.kshulzh.farm.ui.common.config.sectionServiceHttpClient
 
-object ItemsApp {
-    lateinit var selectedItem: MutableState<ItemDto?>
+object SectionsApp {
+    lateinit var selectedSection: MutableState<SectionDto?>
+    lateinit var sections: MutableList<SectionDto>
     lateinit var editMode: MutableState<Boolean>
-    lateinit var items: MutableList<ItemDto>
     lateinit var loading: MutableState<Boolean>
-    suspend fun fetchItems() {
+    suspend fun fetchSections() {
         CoroutineScope(coroutine).launch {
             loading.value = true
-            items.clear()
-            items.addAll(itemServiceHttpClient.getItems().asList().toMutableList())
+            sections.clear()
+            sections.addAll(sectionServiceHttpClient.getAllSections().asList().toMutableList())
             loading.value = false
         }
     }
-
-    @OptIn(ExperimentalFoundationApi::class)
     @Composable
-    fun ItemsApp() {
-        selectedItem = remember { mutableStateOf(null) }
-        editMode = remember { mutableStateOf(false) }
-        loading = remember { mutableStateOf(true) }
-        items = remember { mutableListOf() }
-
+    fun SectionsApp() {
         if (loading.value) {
-            ActionCircularProgressIndicator() {
-                fetchItems()
+            ActionCircularProgressIndicator {
+                fetchSections()
             }
-
         } else {
-            if (selectedItem.value == null) {
-                ItemsAppViewAll()
+            if(selectedSection.value == null) {
+                SectionsAppViewAll()
             } else {
-                ItemsAppView(selectedItem.value!!, editMode.value)
+
             }
         }
     }
-
     @Composable
-    fun ItemsAppView(itemDto: ItemDto, edit: Boolean = false) {
-        val id = remember { mutableStateOf(itemDto.id) }
-        val name = remember { mutableStateOf(itemDto.name) }
-        val description = remember { mutableStateOf(itemDto.description) }
-        val price = remember { mutableStateOf(itemDto.price?.toString()) }
-        val itemCode = remember { mutableStateOf(itemDto.itemCode) }
-        val spentMoney = remember { mutableStateOf(itemDto.spentMoney?.toString()) }
+    fun SectionsAppView(sectionDto: SectionDto, edit: Boolean = false) {
+        //var width: Double? = null
+        //var height: Double? = null
+        //    var depth: Double? = null
+        val id = remember { mutableStateOf(sectionDto.id) }
+        val name = remember { mutableStateOf(sectionDto.name) }
+        val number = remember { mutableStateOf<String?>(sectionDto.number.toString()) }
+        val capacity = remember { mutableStateMapOf(*(sectionDto.capacity.map { it.key to it.value?.toString() }.toTypedArray()))}
+        val width = remember { mutableStateOf(sectionDto.width?.toString()) }
+        val height = remember { mutableStateOf(sectionDto.height?.toString()) }
+        val depth = remember { mutableStateOf(sectionDto.depth?.toString()) }
         Column {
             PropertyComponent(phrases.ID, id, edit)
             PropertyComponent(phrases.NAME, name, edit)
-            PropertyComponent(phrases.DESCRIPTION, description, edit)
-            PropertyComponent(phrases.PRICE, price, edit)
-            PropertyComponent(phrases.ITEM_CODE, itemCode, edit)
-            PropertyComponent(phrases.SPENT_MONEY, spentMoney, edit)
+            PropertyComponent(phrases.NUMBER, number, edit)
+            MapPropertyComponent(phrases.CAPACITY, capacity, edit)
+            PropertyComponent(phrases.WIDTH, width, edit)
+            PropertyComponent(phrases.HEIGHT, height, edit)
+            PropertyComponent(phrases.DEPTH, depth, edit)
+
             if (edit) {
                 Row {
                     Button({
-                        with(itemDto) {
+                        with(sectionDto) {
                             this.name = name.value
-                            this.description = description.value
-                            this.itemCode = itemCode.value
-                            this.price = price.value?.toDouble()
-                            this.spentMoney = spentMoney.value?.toDouble()
+                            this.number = number.value?.toLong()
+                            this.capacity = capacity.toMap().mapValues { it.value?.toInt() ?: -1 }
+                            this.width = width.value?.toDouble()
+                            this.height = height.value?.toDouble()
+                            this.depth = depth.value?.toDouble()
+
                         }
-                        if (itemDto.id == null) {
-                            itemDto.id = id()
-                            items.add(itemDto)
+                        if (sectionDto.id == null) {
+                            sectionDto.id = id()
+                            sections.add(sectionDto)
                             CoroutineScope(coroutine).launch {
-                                itemServiceHttpClient.addItem(itemDto)
+                                sectionServiceHttpClient.addSection(sectionDto)
                             }.start()
                         } else {
                             CoroutineScope(coroutine).launch {
-                                itemServiceHttpClient.editItem(itemDto)
+                                sectionServiceHttpClient.editSection(sectionDto)
                             }.start()
                         }
                         editMode.value = false
-                        selectedItem.value = null
+                        selectedSection.value = null
                     }) {
                         Text(phrases.SAVE)
                     }
                     Button({
                         editMode.value = false
-                        selectedItem.value = null
+                        selectedSection.value = null
                     }) {
                         Text(phrases.CANCEL)
                     }
@@ -140,15 +138,14 @@ object ItemsApp {
         }
     }
 
-    @ExperimentalFoundationApi
     @Composable
-    fun ItemsAppViewAll() {
+    fun SectionsAppViewAll() {
         Column(
             modifier = Modifier.fillMaxWidth().fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items.forEach {
-                ItemsAppViewRow(it)
+            sections.forEach {
+                SectionsAppViewRow(it)
             }
 
         }
@@ -158,29 +155,30 @@ object ItemsApp {
             horizontalAlignment = Alignment.End
         ) {
             IconButton({
-                selectedItem.value = ItemDto()
+                selectedSection.value = SectionDto()
                 editMode.value = true
             }) {
                 Icon(Icons.Filled.Add, phrases.NEW)
             }
         }
+
     }
 
     @Composable
-    fun ItemsAppViewRow(itemDto: ItemDto) {
+    fun SectionsAppViewRow(sectionDto: SectionDto) {
         var isDeleted by remember { mutableStateOf(false) }
         if (!isDeleted) {
             Row {
                 Button({
-                    selectedItem.value = itemDto
+                    selectedSection.value = sectionDto
                     editMode.value = true
                 }) {
-                    Text(itemDto.name ?: itemDto.id ?: phrases.UNNAMED, fontSize = fontSize)
+                    Text(sectionDto.name ?: sectionDto.number.toString() ?: sectionDto.id ?: phrases.UNNAMED, fontSize = fontSize)
                 }
                 IconButton({
                     CoroutineScope(coroutine).launch {
-                        itemServiceHttpClient.deleteItem(itemDto.id!!)
-                        items.remove(itemDto)
+                        sectionServiceHttpClient.deleteSection(sectionDto.id!!)
+                        sections.remove(sectionDto)
                         isDeleted = true
                     }.start()
                 }) {

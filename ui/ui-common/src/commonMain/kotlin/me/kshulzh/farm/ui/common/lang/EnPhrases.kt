@@ -17,6 +17,7 @@
 package me.kshulzh.farm.ui.common.lang
 
 object EnPhrases : Phrases {
+    override val ID: String = "Id"
     override val SAVE: String = "Save"
     override val NAME: String = "Name"
     override val DESCRIPTION: String = "Description"
@@ -30,4 +31,9 @@ object EnPhrases : Phrases {
     override val DELETE: String = "Delete"
     override val MENU: String = "Menu"
     override val NEW: String = "New"
+    override val NUMBER: String = "Number"
+    override val CAPACITY: String = "Capacity"
+    override val WIDTH: String = "Width"
+    override val HEIGHT: String = "Height"
+    override val DEPTH: String = "Depth"
 }

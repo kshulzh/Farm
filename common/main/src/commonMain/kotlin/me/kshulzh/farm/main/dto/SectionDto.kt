@@ -19,6 +19,8 @@ package me.kshulzh.farm.main.dto
 import me.kshulzh.farm.common.dto.EntityDto
 
 class SectionDto : EntityDto() {
+    var number: Long? = null
+    var name: String? = null
     var capacity: Map<String, Int> = mutableMapOf()
     var width: Double? = null
     var height: Double? = null

@@ -21,6 +21,7 @@ interface Phrases {
         val LANGS = mutableMapOf("en" to EnPhrases)
     }
 
+    val ID: String
     val SAVE: String
     val NAME: String
     val DESCRIPTION: String
@@ -34,4 +35,9 @@ interface Phrases {
     val DELETE: String
     val MENU: String
     val NEW: String
+    val NUMBER: String
+    val CAPACITY: String
+    val WIDTH: String
+    val HEIGHT: String
+    val DEPTH: String
 }
